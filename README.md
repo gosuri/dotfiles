@@ -1,2 +1,0 @@
-## Dotfiles
-My environment
