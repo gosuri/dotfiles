@@ -1,2 +1,1 @@
-## Greg Osuri's Dotfiles
-my ~
+# my ~
