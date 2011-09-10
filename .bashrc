@@ -177,8 +177,36 @@ prompt_compact() {
 }
 
 prompt_color() {
-    PS1="\[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\$ \[$RESET\]"
+  PS1="\[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(__git_ps1 '(%s)')\[$WHITE\]\n\$ \[$RESET\]"
     PS2="\[\033[33;1m\]continue \[\033[0;1m\]> "
+}
+
+# ================================================================
+# BASH COMPLETION 
+# ================================================================
+
+
+test -z "$BASH_COMPLETION" && {
+    bash=${BASH_VERSION%.*}; bmajor=${bash%.*}; bminor=${bash#*.}
+    test -n "$PS1" && test $bmajor -gt 1 && {
+        # search for a bash_completion file to source
+        for f in /usr/local/etc/bash_completion \
+                 /usr/pkg/etc/bash_completion \
+                 /opt/local/etc/bash_completion \
+                 /etc/bash_completion
+        do
+            test -f $f && {
+                . $f
+                break
+            }
+        done
+    }
+    unset bash bmajor bminor
+}
+
+# override and disable tilde expansion
+_expand() {
+    return 0
 }
 
 # ================================================================
