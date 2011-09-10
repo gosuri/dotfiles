@@ -13,6 +13,12 @@
 # readline config
 : ${INPUTRC=~/.inputrc}
 
+# git bash completion
+
+: ${GIT_PS1_SHOWDIRTYSTATE=true}
+: ${GIT_PS1_SHOWSTASHSTATE=true}
+: ${GIT_PS1_SHOWUNTRACKEDFILES=true}
+
 # ================================================================
 # SHELL OPTIONS
 # ================================================================
@@ -132,6 +138,28 @@ ACK_PAGER="$PAGER"
 ACK_PAGER_COLOR="$PAGER"
 
 # ================================================================
+# BASH COMPLETION 
+# ================================================================
+test -z "$BASH_COMPLETION" && {
+    bash=${BASH_VERSION%.*}; bmajor=${bash%.*}; bminor=${bash#*.}
+    test -n "$PS1" && test $bmajor -gt 1 && {
+        # search for a bash_completion file to source
+        for f in /usr/local/etc/bash_completion \
+                 /usr/pkg/etc/bash_completion \
+                 /opt/local/etc/bash_completion \
+                 /etc/bash_completion
+        do
+            test -f $f && {
+                . $f
+                break
+            }
+        done
+    }
+    unset bash bmajor bminor
+}
+
+
+# ================================================================
 # PROMPT
 # ================================================================
 MAGENTA="\033[1;31m"
@@ -156,14 +184,6 @@ else
     P="\$"
 fi
 
-is_git_dirty() {
-  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
-}
-
-parse_git_branch() {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(is_git_dirty)/"
-}
-
 prompt_simple() {
     unset PROMPT_COMMAND
     PS1="[\u@\h:\w]\$ "
@@ -179,29 +199,6 @@ prompt_compact() {
 prompt_color() {
   PS1="\[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(__git_ps1 '(%s)')\[$WHITE\]\n\$ \[$RESET\]"
     PS2="\[\033[33;1m\]continue \[\033[0;1m\]> "
-}
-
-# ================================================================
-# BASH COMPLETION 
-# ================================================================
-
-
-test -z "$BASH_COMPLETION" && {
-    bash=${BASH_VERSION%.*}; bmajor=${bash%.*}; bminor=${bash#*.}
-    test -n "$PS1" && test $bmajor -gt 1 && {
-        # search for a bash_completion file to source
-        for f in /usr/local/etc/bash_completion \
-                 /usr/pkg/etc/bash_completion \
-                 /opt/local/etc/bash_completion \
-                 /etc/bash_completion
-        do
-            test -f $f && {
-                . $f
-                break
-            }
-        done
-    }
-    unset bash bmajor bminor
 }
 
 # override and disable tilde expansion
