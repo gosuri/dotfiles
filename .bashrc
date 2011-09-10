@@ -162,11 +162,11 @@ test -z "$BASH_COMPLETION" && {
 # ================================================================
 # PROMPT
 # ================================================================
-MAGENTA="\033[1;31m"
+MAGENTA="\[\033[1;31m\]"
 ORANGE="\033[1;33m"
-GREEN="\033[1;32m"
-PURPLE="\033[1;35m"
-WHITE="\033[1;37m"
+GREEN="\[\033[1;32m\]"
+PURPLE="\[\033[1;35m\]"
+WHITE="\[\033[1;37m\]"
 RED="\[\033[0;31m\]"
 BROWN="\[\033[0;33m\]"
 GREY="\[\033[0;97m\]"
@@ -197,7 +197,7 @@ prompt_compact() {
 }
 
 prompt_color() {
-  PS1="\[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(__git_ps1 '(%s)')\[$WHITE\]\n\$ \[$RESET\]"
+    PS1="$BROWN\w $GREEN\$(__git_ps1 '(%s)') $WHITE\n\$ $RESET"
     PS2="\[\033[33;1m\]continue \[\033[0;1m\]> "
 }
 
