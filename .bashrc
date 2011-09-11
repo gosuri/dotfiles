@@ -171,7 +171,7 @@ RED="\[\033[0;31m\]"
 BROWN="\[\033[0;33m\]"
 GREY="\[\033[0;97m\]"
 BLUE="\[\033[0;34m\]"
-RESET="\033[m"
+RESET="\[\033[m\]"
 SCREEN_ESC="\[\033k\033\134\]"
 
 if [ "$LOGNAME" = "root" ]; then
