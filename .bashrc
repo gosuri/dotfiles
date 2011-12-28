@@ -105,6 +105,17 @@ then
   fi
 fi
 
+# ================================================================
+# Node.js setup
+# ================================================================
+
+
+if test -n "$(command -v npm)"
+then
+  export NODE_PATH="/usr/local/lib/node_modules:$HOME/node_modules";
+  PATH="$PATH:/usr/local/lib/node_modules/npm/bin:$HOME/node_modules/.bin";
+fi
+
 
 # history config
 HISTCONTROL=ignoreboth
