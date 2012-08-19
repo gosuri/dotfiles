@@ -88,25 +88,9 @@ export FTP_PASSIVE
 # Load RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
-# Setup bundler if not installed
-if test -n "$(command -v rvm)"
-then
-
-  # bundler
-  if ! test -n "$(command -v bundle)"
-  then
-    gem install bundler
-  fi
-
-  # cheat
-  if ! test -n "$(command -v cheat)"
-  then
-    gem install cheat
-  fi
-fi
 
 # ================================================================
-# Node.js setup
+# NodeJS setup
 # ================================================================
 
 
@@ -239,7 +223,7 @@ if [ "$UNAME" = Darwin ]; then
         MANPATH="/usr/pkg/share/man:$MANPATH"
     }
 
-    # java setup
+    # Java setup
     JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
     ANT_HOME="/Developer/Java/Ant"
     export ANT_HOME JAVA_HOME
@@ -247,6 +231,15 @@ if [ "$UNAME" = Darwin ]; then
     test -d /opt/jruby &&
     JRUBY_HOME="/opt/jruby"
     export JRUBY_HOME
+
+    # AWS SETUP
+    export EC2_PRIVATE_KEY="$(/bin/ls $HOME/.ec2/pk-*.pem)"
+    export EC2_CERT="$(/bin/ls $HOME/.ec2/cert-*.pem)"
+    export EC2_HOME="/usr/local/Cellar/ec2-api-tools/1.5.0.1/jars"
+
+    # cloud formation
+    export AWS_CLOUDFORMATION_HOME="/usr/local/Cellar/aws-cfn-tools/1.0.9/jars"
+
 fi
 
 # Use the color prompt by default when interactive
@@ -256,4 +249,8 @@ test -n "$INTERACTIVE" -a -n "$LOGIN" && {
     uname -npsr
     uptime
 }
+
+export PG_USER="gosuri"
+export PG_PASSWORD=""
+
 
