@@ -98,6 +98,7 @@ if test -n "$(command -v npm)"
 then
   export NODE_PATH="/usr/local/lib/node_modules:$HOME/node_modules";
   PATH="$PATH:/usr/local/lib/node_modules/npm/bin:$HOME/node_modules/.bin";
+  PATH="$PATH:/usr/local/share/npm/bin"
 fi
 
 
@@ -232,14 +233,6 @@ if [ "$UNAME" = Darwin ]; then
     JRUBY_HOME="/opt/jruby"
     export JRUBY_HOME
 
-    # AWS SETUP
-    export EC2_PRIVATE_KEY="$(/bin/ls $HOME/.ec2/pk-*.pem)"
-    export EC2_CERT="$(/bin/ls $HOME/.ec2/cert-*.pem)"
-    export EC2_HOME="/usr/local/Cellar/ec2-api-tools/1.5.0.1/jars"
-
-    # cloud formation
-    export AWS_CLOUDFORMATION_HOME="/usr/local/Cellar/aws-cfn-tools/1.0.9/jars"
-
 fi
 
 # Use the color prompt by default when interactive
@@ -254,3 +247,5 @@ export PG_USER="gosuri"
 export PG_PASSWORD=""
 
 
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
