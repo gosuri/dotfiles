@@ -154,6 +154,11 @@ test -z "$BASH_COMPLETION" && {
     unset bash bmajor bminor
 }
 
+# ================================================================
+# GIT PROMPT
+# ================================================================
+
+source $HOME:/.files/git-prompt.sh
 
 # ================================================================
 # PROMPT
@@ -242,10 +247,5 @@ test -n "$INTERACTIVE" -a -n "$LOGIN" && {
     uname -npsr
     uptime
 }
-
-export PG_USER="gosuri"
-export PG_PASSWORD=""
-
-
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
