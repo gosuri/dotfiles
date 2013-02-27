@@ -157,8 +157,9 @@ test -z "$BASH_COMPLETION" && {
 # ================================================================
 # GIT PROMPT
 # ================================================================
-
-source $HOME/.dotfiles/git_prompt.sh
+test -x "$HOME/.dotfiles/bin/git-prompt.sh" && {
+  source $HOME/.dotfiles/bin/git-prompt.sh
+}
 
 # ================================================================
 # PROMPT
