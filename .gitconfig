@@ -1,0 +1,84 @@
+[user]
+	name  = Greg Osuri
+	email = gosuri@gmail.com
+
+[alias]
+	browse       = !hub browse
+	w            = !hub browse
+	compare      = !hub compare
+	cb           = !git-cut-branch
+	sh           = !git-sh
+	grab         = !git-grab
+	thanks       = !git-thanks
+	track        = !git-track
+	ll           = log --pretty=oneline --abbrev-commit --max-count=15
+	wip          = !git add -u && git commit -m ...
+	wipc         = !date >> WIP && git add WIP && git commit -m ...
+	fp           = format-patch --stdout
+	ci           = commit
+	x            = checkout HEAD
+	bv           = !git branch --color -v | cut -c1-100
+	incoming     = !git-incoming
+	in           = !git-incoming
+	outgoing     = !git-outgoing
+	out          = !git-outgoing
+	s            = status -sb -uno --ignore-submodules=untracked
+	st           = status
+	sa           = status -sb --ignore-submodules=untracked
+  lol          = log --graph --decorate --pretty=oneline --abbrev-commit
+  lola         = log --graph --decorate --pretty=oneline --abbrev-commit --all
+
+[core]
+	filemode          = true
+	logallrefupdates  = true
+	whitespace        = space-before-tab, trailing-space
+
+[help]
+	browser = open
+
+[branch]
+	autosetupmerge = true
+
+[diff]
+	renames        = copies
+	mnemonicprefix = true
+
+[push]
+	default = current
+
+[sendemail]
+	smtpserver      = smtp.gmail.com
+	smtpserverport  = 587
+	smtpencryption  = tls
+	smtpuser        = gosuri@gmail.com
+
+[color]
+	ui = auto
+
+[color "diff"]
+	meta  = blue bold
+	frag  = magenta bold
+	old   = red bold
+	new   = green bold
+
+[color "branch"]
+	current = yellow reverse
+	local   = yellow bold
+	remote  = green bold
+	plain   = red bold
+
+[color "status"]
+	added     = yellow
+	changed   = green bold
+	untracked = blue bold
+
+[hub]
+	http-clone = true
+
+[browser "gitscm"]
+	cmd = sh -c 'open http://git-scm.com/docs/$(basename $1 .html)' --
+
+[github]
+  user = gosuri
+
+# vim: noexpandtab ts=4 sw=4 sts=0
