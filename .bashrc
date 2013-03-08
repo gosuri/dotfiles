@@ -208,6 +208,24 @@ _expand() {
     return 0
 }
 
+# ================================================================
+# AWS EC2 Setup
+# ================================================================
+# Your certificate download:http://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key
+# Download two ".pem" files, one starting with `pk-`, and one starting with `cert-`.
+# You need to put both into a folder in your home directory, `~/.ec2`.
+if [ -f "$HOME"/.ec2/pk-*.pem ]; then
+  EC2_PRIVATE_KEY="$(/bin/ls "$HOME"/.ec2/pk-*.pem | /usr/bin/head -1)"
+fi
+
+if [ -f "$HOME"/.ec2/cert-*.pem ]; then
+  EC2_CERT="$(/bin/ls "$HOME"/.ec2/cert-*.pem | /usr/bin/head -1)"
+fi
+
+test -d  /usr/local/Library/LinkedKegs/ec2-api-tools/jars &&
+  EC2_HOME="/usr/local/Library/LinkedKegs/ec2-api-tools/jars"
+
+export EC2_HOME EC2_PRIVATE_KEY EC2_CERT
 
 
 # ================================================================
@@ -240,17 +258,6 @@ if [ "$UNAME" = Darwin ]; then
     test -d /opt/jruby &&
     JRUBY_HOME="/opt/jruby"
     export JRUBY_HOME
-    # ================================================================
-    # AWS EC2 Setup
-    # ================================================================
-    # Your certificate download:http://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key
-    # Download two ".pem" files, one starting with `pk-`, and one starting with `cert-`.
-    # You need to put both into a folder in your home directory, `~/.ec2`.
-    #
-    EC2_PRIVATE_KEY="$(/bin/ls "$HOME"/.ec2/pk-*.pem | /usr/bin/head -1)"
-    EC2_CERT="$(/bin/ls "$HOME"/.ec2/cert-*.pem | /usr/bin/head -1)"
-    EC2_HOME="/usr/local/Library/LinkedKegs/ec2-api-tools/jars"
-    export EC2_HOME EC2_PRIVATE_KEY EC2_CERT
 fi
 
 # Use the color prompt by default when interactive
