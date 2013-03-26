@@ -245,6 +245,7 @@ if [ "$UNAME" = Darwin ]; then
         alias port="sudo nice -n +18 $PORTS/bin/port"
     }
 
+
     test -x /usr/pkg -a ! -L /usr/pkg && {
         PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
         MANPATH="/usr/pkg/share/man:$MANPATH"
@@ -258,6 +259,8 @@ if [ "$UNAME" = Darwin ]; then
     test -d /opt/jruby &&
     JRUBY_HOME="/opt/jruby"
     export JRUBY_HOME
+
+    # common alises
 fi
 
 # Use the color prompt by default when interactive
