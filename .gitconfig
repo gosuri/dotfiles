@@ -1,27 +1,32 @@
+# vim: noexpandtab ts=4 sw=4 sts=0
+
 [user]
   name  = Greg Osuri
   email = gosuri@gmail.com
 
 [alias]
-  cb           = !git-cut-branch
-  sh           = !git-sh
-  grab         = !git-grab
-  thanks       = !git-thanks
-  track        = !git-track
+  ci           = commit
+  co           = checkout
+  st           = status
+  s            = status -sb -uno --ignore-submodules=untracked
+  di           = diff
+  dc           = diff --cached
+  amend        = commit --amend
+  pom          = push origin master
+  b            = branch
+
   ll           = log --pretty=oneline --abbrev-commit --max-count=15
   wip          = !git add -u && git commit -m ...
   wipc         = !date >> WIP && git add WIP && git commit -m ...
   fp           = format-patch --stdout
-  ci           = commit
   x            = checkout HEAD
   bv           = !git branch --color -v | cut -c1-100
   incoming     = !git-incoming
   in           = !git-incoming
   outgoing     = !git-outgoing
   out          = !git-outgoing
-  s            = status -sb -uno --ignore-submodules=untracked
-  st           = status
   sa           = status -sb --ignore-submodules=untracked
+
   lol          = log --graph --decorate --pretty=oneline --abbrev-commit
   lola         = log --graph --decorate --pretty=oneline --abbrev-commit --all
 
@@ -78,4 +83,5 @@
 [github]
   user = gosuri
 
-# vim: noexpandtab ts=4 sw=4 sts=0
+[merge]
+    tool = vimdiff
