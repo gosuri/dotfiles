@@ -12,7 +12,7 @@
   di           = diff
   dc           = diff --cached
   amend        = commit --amend
-  pom          = push origin master
+  pod          = push origin develop
   b            = branch
 
   ll           = log --pretty=oneline --abbrev-commit --max-count=15
