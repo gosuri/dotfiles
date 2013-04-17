@@ -10,7 +10,7 @@ source $ZSH/oh-my-zsh.sh
 # ================================================================
 # Plugins are located under ~/.oh-my-zsh/plugins/* and 
 # custom plugins should under ~/.oh-my-zsh/custom/plugins/
-plugins=(git)
+plugins=(git bundler github)
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
