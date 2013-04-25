@@ -15,7 +15,7 @@ function makeLink() {
   TARGET=$HOME/$1
 
   # backup if the file exist
-  if [ -f $TARGET ]; then
+  if test -f $TARGET || test -d $TARGET; then
     echo "--> detected existing $TARGET"
     mv $TARGET $TARGET-$TIMESTAMP
     echo "--> backed up $TARGET to $TARGET-$TIMESTAMP"
