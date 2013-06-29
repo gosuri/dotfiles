@@ -10,7 +10,7 @@ source $ZSH/oh-my-zsh.sh
 # ================================================================
 # Plugins are located under ~/.oh-my-zsh/plugins/* and 
 # custom plugins should under ~/.oh-my-zsh/custom/plugins/
-plugins=(git bundler github)
+plugins=(git bundler github git-flow knife)
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -117,19 +117,18 @@ fi
 # Your certificate download:http://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key
 # Download two ".pem" files, one starting with `pk-`, and one starting with `cert-`.
 # You need to put both into a folder in your home directory, `~/.ec2`.
-if [ -f "$HOME"/.ec2/pk-*.pem ]; then
-  EC2_PRIVATE_KEY="$(/bin/ls "$HOME"/.ec2/pk-*.pem | /usr/bin/head -1)"
-fi
+# if [ -f "$HOME"/.ec2/pk-*.pem ]; then
+#   EC2_PRIVATE_KEY="$(/bin/ls "$HOME"/.ec2/pk-*.pem | /usr/bin/head -1)"
+# fi
 
-if [ -f "$HOME"/.ec2/cert-*.pem ]; then
-  EC2_CERT="$(/bin/ls "$HOME"/.ec2/cert-*.pem | /usr/bin/head -1)"
-fi
+# if [ -f "$HOME"/.ec2/cert-*.pem ]; then
+#   EC2_CERT="$(/bin/ls "$HOME"/.ec2/cert-*.pem | /usr/bin/head -1)"
+# fi
 
-test -d  /usr/local/Library/LinkedKegs/ec2-api-tools/jars &&
-  EC2_HOME="/usr/local/Library/LinkedKegs/ec2-api-tools/jars"
+# test -d  /usr/local/Library/LinkedKegs/ec2-api-tools/jars &&
+#   EC2_HOME="/usr/local/Library/LinkedKegs/ec2-api-tools/jars"
 
-export EC2_HOME EC2_PRIVATE_KEY EC2_CERT
-
+# export EC2_HOME EC2_PRIVATE_KEY EC2_CERT
 
 test -n "$INTERACTIVE" -a -n "$LOGIN" && {
     uname -npsr
@@ -149,3 +148,5 @@ fi
 # Rename files using glob, example 'mmv *.dat *.dat_save'
 autoload -U zmv
 alias mmv='noglob zmv -W'
+
+alias cookbook='nocorrect cookbook '
