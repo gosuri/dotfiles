@@ -253,3 +253,18 @@ function! RunTests(filename)
         end
     end
 endfunction
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MISC
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>vp :call VagrantProvision()<cr>
+
+function! VagrantProvision()
+  exec ":!vagrant provision"
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FOR EDITING CRON TABS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au BufEnter /private/tmp/crontab.* setl backupcopy=yes
