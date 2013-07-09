@@ -150,3 +150,4 @@ autoload -U zmv
 alias mmv='noglob zmv -W'
 
 alias cookbook='nocorrect cookbook '
+alias knife='nocorrect knife'
