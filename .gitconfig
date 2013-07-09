@@ -27,6 +27,7 @@
   outgoing     = !git-outgoing
   out          = !git-outgoing
   sa           = status -sb --ignore-submodules=untracked
+  rb           = rebase HEAD~2 -i
 
   lol          = log --graph --decorate --pretty=oneline --abbrev-commit
   lola         = log --graph --decorate --pretty=oneline --abbrev-commit --all
