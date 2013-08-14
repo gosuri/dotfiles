@@ -151,3 +151,4 @@ alias mmv='noglob zmv -W'
 
 alias cookbook='nocorrect cookbook '
 alias knife='nocorrect knife'
+alias faye='rackup faye.ru -s thin -E production'
