@@ -152,13 +152,57 @@ function! ShowRoutes()
   " Delete empty trailing line
   :normal dd
 endfunction
+
+function! ListControllers()
+  :CtrlPClearAllCaches
+  if isdirectory("app/scripts/controllers")
+    :CtrlP app/scripts/controllers
+  else
+    :CtrlP app/controllers
+  endif
+endfunction
+
+function! ListViews()
+  :CtrlPClearAllCaches
+  :CtrlP app/views
+endfunction
+
+function! ListModels()
+  :CtrlPClearAllCaches
+  if isdirectory("app/scripts/models")
+    :CtrlP app/scripts/models
+  else
+    :CtrlP app/models
+  endif
+endfunction
+
+function! ListStyles()
+  :CtrlPClearAllCaches
+  if isdirectory("app/styles")
+    :CtrlP app/styles
+  else
+    :CtrlP app/assets/stylesheets
+  endif
+endfunction
+
+function! ListScripts()
+  :CtrlPClearAllCaches
+  if isdirectory("app/scripts")
+    :CtrlP app/scripts
+  else
+    :CtrlP app/assets/javascripts
+  endif
+endfunction
+
 map <leader>gR :call ShowRoutes()<cr>
-map <leader>gv :CtrlPClearAllCaches<cr>\|:CtrlP app/views<cr>
-map <leader>gc :CtrlPClearAllCaches<cr>\|:CtrlP app/controllers<cr>
-map <leader>gm :CtrlPClearAllCaches<cr>\|:CtrlP app/models<cr>
+map <leader>gc :call ListControllers()<cr>
+map <leader>gv :call ListViews()<cr>
+map <leader>gm :call ListModels()<cr>
+map <leader>gs :call ListStyles()<cr>
+map <leader>gj :call ListScripts()<cr>
+
+" Rails specific
 map <leader>gh :CtrlPClearAllCaches<cr>\|:CtrlP app/helpers<cr>
-map <leader>gs :CtrlPClearAllCaches<cr>\|:CtrlP app/assets/stylesheets<cr>
-map <leader>gj :CtrlPClearAllCaches<cr>\|:CtrlP app/assets/javascripts<cr>
 map <leader>gl :CtrlPClearAllCaches<cr>\|:CtrlP lib<cr>
 map <leader>gf :CtrlPClearAllCaches<cr>\|:CtrlP spec/features<cr>
 map <leader>gg :topleft 100 :split Gemfile<cr>
@@ -178,7 +222,7 @@ function! AlternateForCurrentFile()
   let new_file = current_file
   let in_spec = match(current_file, '^spec/') != -1
   let going_to_spec = !in_spec
-  let in_app = match(current_file, '\<controllers\>') != -1 || match(current_file, '\<models\>') != -1 || match(current_file, '\<views\>') != -1 || match(current_file, '\<helpers\>') != -1
+  let in_app = match(current_file, '\<controllers\>') != -1 || match(current_file, '\<models\>') != -1 || match(current_file, '\<views\>') != -1 || match(current_file, '\<helpers\>') != -1 ||  match(current_file, '\<workers\>')
   if going_to_spec
     if in_app
       let new_file = substitute(new_file, '^app/', '', '')
