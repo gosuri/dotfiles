@@ -148,7 +148,14 @@ fi
 # Rename files using glob, example 'mmv *.dat *.dat_save'
 autoload -U zmv
 alias mmv='noglob zmv -W'
-
-alias cookbook='nocorrect cookbook '
-alias knife='nocorrect knife'
 alias faye='rackup faye.ru -s thin -E production'
+
+# ================================================================
+# NO CORRECTS
+# ================================================================
+# Disable zsh auto correct 
+nocorrects=( "knife" "storm")
+for i in "${nocorrects[@]}"
+do
+  alias $i="nocorrect $i"
+done
