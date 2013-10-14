@@ -154,8 +154,17 @@ alias faye='rackup faye.ru -s thin -E production'
 # NO CORRECTS
 # ================================================================
 # Disable zsh auto correct 
-nocorrects=( "knife" "storm")
+nocorrects=( "knife" "storm" "go" )
 for i in "${nocorrects[@]}"
 do
   alias $i="nocorrect $i"
 done
+
+
+# ================================================================
+# GO SETTINGS
+# ================================================================
+if test -n "$(command -v go)"
+then
+  export GOPATH="/usr/local/lib/go";
+fi
