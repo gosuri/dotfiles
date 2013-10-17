@@ -1,4 +1,4 @@
-#!/usr/bin/env /bin/sh
+#!/usr/bin/env /bin/bash
 #
 # Copyright 2013 Greg Osuri <gosuri@gmail.com>
 #
@@ -68,22 +68,19 @@ function install_gitconfig() {
   echo "--> finished installing .gitconfig"
 }
 
-function install_omzsh() {
-  if ! [ -d $HOME/.oh-my-zsh ]; then
-    printf "Install oh my zsh? (y/n): "
-    read -r INSTALL_OMZ
+function install_zsh() {
+  if ! [ -n "$(command -v zsh)" ]
+  then
+    echo "--> ZSH is not found. Installing ZSH"
+    sudo apt-get install zsh
   fi
+  chsh -s /bin/zsh
+}
 
-  if [ "$INSTALL_OMZ" == "y" ]; then
-    if ! [ -n "$(command -v zsh)" ]
-    then
-      echo "--> ZSH is not found. Installing ZSH"
-      sudo apt-get install zsh
-    fi
-    chsh -s /bin/zsh
-    echo "--> Fetching oh-my-zsh"
-    git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
-  fi
+function install_omzsh() {
+  echo "--> installing oh-my-zsh"
+  git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
+  echo "--> finished installing oh-my-zsh"
 }
 
 function makeLink() {
@@ -116,11 +113,11 @@ function makeAllLinks() {
   echo "--> finished linking"
 }
 
-
 function main() {
   echo "--> installing dotfiles to $DOTFILES"
   pushd $DOTFILES > /dev/null
   install_gitconfig
+  install_omzsh
   makeAllLinks
   popd > /dev/null
   echo "--> finished installing .dotfiles"
