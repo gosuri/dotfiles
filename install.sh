@@ -78,9 +78,22 @@ function install_zsh() {
 }
 
 function install_omzsh() {
-  echo "--> installing oh-my-zsh"
-  git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
-  echo "--> finished installing oh-my-zsh"
+  if test -d $HOME/.oh-my-zsh
+  then
+    echo "--> skipping .oh-my-zsh. $HOME/.oh-my-zsh exists"
+  else
+    echo "--> installing oh-my-zsh"
+    git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
+  fi
+
+  if test -f $HOME/.oh-my-zsh/themes/sorin-custom.zsh-theme
+  then
+    echo "--> skipping: sorin-custom.zsh-theme exists"
+  else
+    echo "--> linking sorin-custom zsh theme"
+    ln -s $DOTFILES/themes/sorin-custom.zsh-theme $HOME/.oh-my-zsh/themes/sorin-custom.zsh-theme
+  fi
+  echo "--> finished: oh-my-zsh"
 }
 
 function makeLink() {
