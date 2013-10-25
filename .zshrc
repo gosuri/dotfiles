@@ -154,7 +154,7 @@ alias faye='rackup faye.ru -s thin -E production'
 # NO CORRECTS
 # ================================================================
 # Disable zsh auto correct 
-nocorrects=( "knife" "storm" "go" )
+nocorrects=( "knife" "storm" "go" "rspec" )
 for i in "${nocorrects[@]}"
 do
   alias $i="nocorrect $i"
