@@ -291,7 +291,11 @@ function! RunTests(filename)
         if filereadable("script/test")
             exec ":!script/test " . a:filename
         elseif filereadable("Gemfile")
+          if filereadable("bin/spring")
+            exec ":!bin/spring rspec --color " . a:filename
+          else
             exec ":!bundle exec rspec --color " . a:filename
+          end
         else
             exec ":!rspec --color " . a:filename
         end
