@@ -162,6 +162,17 @@ function! ListControllers()
   endif
 endfunction
 
+function! ListServices()
+  :CtrlPClearAllCaches
+  if isdirectory("app/scripts/services")
+    :CtrlP app/scripts/services
+  elseif isdirectory("app/services")
+    :CtrlP app/services
+  else
+    :CtrlP app/lib/services
+  endif
+endfunction
+
 function! ListViews()
   :CtrlPClearAllCaches
   :CtrlP app/views
@@ -185,6 +196,11 @@ function! ListStyles()
   endif
 endfunction
 
+function! ListDirectives()
+  :CtrlPClearAllCaches
+  :CtrlP app/scripts/directives
+endfunction
+
 function! ListScripts()
   :CtrlPClearAllCaches
   if isdirectory("app/scripts")
@@ -198,7 +214,8 @@ map <leader>gR :call ShowRoutes()<cr>
 map <leader>gc :call ListControllers()<cr>
 map <leader>gv :call ListViews()<cr>
 map <leader>gm :call ListModels()<cr>
-map <leader>gs :call ListStyles()<cr>
+map <leader>gss :call ListStyles()<cr>
+map <leader>gsv :call ListServices()<cr>
 map <leader>gj :call ListScripts()<cr>
 
 " Rails specific
