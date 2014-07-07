@@ -149,6 +149,7 @@ fi
 autoload -U zmv
 alias mmv='noglob zmv -W'
 alias faye='rackup faye.ru -s thin -E production'
+alias be='bundle exec'
 
 # ================================================================
 # NO CORRECTS
@@ -164,7 +165,10 @@ done
 # ================================================================
 # GO SETTINGS
 # ================================================================
+PATH="$PATH:/usr/local/go/bin"
+
 if test -n "$(command -v go)"
 then
   export GOPATH="/usr/local/lib/go";
+  PATH="$PATH:/usr/local/lib/go/bin"
 fi
