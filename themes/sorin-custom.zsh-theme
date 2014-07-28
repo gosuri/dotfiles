@@ -7,7 +7,7 @@
 # ------------------------------------------------------------------------------
 
 
-local prefix="%{$fg[red]%}$USER@$(hostname)"
+local prefix="%{$fg[red]%}"
 
 if [[ "$TERM" != "dumb" ]] && [[ "$DISABLE_LS_COLORS" != "true" ]]; then
   MODE_INDICATOR="%{$fg_bold[red]%}❮%{$reset_color%}%{$fg[red]%}❮❮%{$reset_color%}"
