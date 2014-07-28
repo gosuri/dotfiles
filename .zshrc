@@ -66,10 +66,16 @@ esac
 export FTP_PASSIVE
 
 # ================================================================
-# RVM AND RUBY SETUP
+# RVM, RBENV AND RUBY SETUP
 # ================================================================
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+
+if test -n "$(command -v rbenv)"
+then
+  eval "$(rbenv init -)"
+fi
 
 # history config
 HISTCONTROL=ignoreboth
