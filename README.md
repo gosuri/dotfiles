@@ -26,7 +26,7 @@ $ sudo apt-get install zsh
 zsh comes packaged on OSX, if not you can install with homebrew:
 
 ```
-$ sudo apt-get install zsh
+$ brew install zsh
 ```
 
 Change the shell to zsh:
