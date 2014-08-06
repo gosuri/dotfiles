@@ -39,6 +39,6 @@ $ chsh -s /bin/zsh
 ## Installing
 
 ```
-git clone git://github.com/gosuri/dotfiles.git .dotfiles
-.dotfiles/install.sh
+git clone git://github.com/gosuri/dotfiles.git ~/.dotfiles
+~/.dotfiles/install.sh
 ```
