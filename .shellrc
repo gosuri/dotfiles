@@ -1,0 +1,109 @@
+#!/bin/sh
+
+# ================================================================
+# JOBS
+# ================================================================
+# notify of bg job completion immediately
+set -o notify
+
+# ================================================================
+# PATHS
+# ================================================================
+# we want the various sbins on the path along with /usr/local/bin
+PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
+PATH="/usr/local/bin:$PATH"
+
+# put ~/bin on PATH if you have it
+test -d "$HOME/bin" &&
+PATH="$HOME/bin:$PATH"
+
+# ================================================================
+# ENVIRONMENT CONFIGURATION
+# ================================================================
+# detect interactive shell
+case "$-" in
+    *i*) INTERACTIVE=yes ;;
+    *)   unset INTERACTIVE ;;
+esac
+# detect login shell
+case "$0" in
+    -*) LOGIN=yes ;;
+    *)  unset LOGIN ;;
+esac
+# always use PASSIVE mode ftp
+: ${FTP_PASSIVE:=1}
+export FTP_PASSIVE
+
+# ================================================================
+# RVM, RBENV AND RUBY SETUP
+# ================================================================
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+if test -n "$(command -v rbenv)"
+then
+  eval "$(rbenv init -)"
+fi
+
+# history config
+HISTCONTROL=ignoreboth
+HISTFILESIZE=10000
+HISTSIZE=10000
+
+# ================================================================
+# PAGER / EDITOR
+# ================================================================
+if test -n "$(command -v vim)"
+then
+  export EDITOR=vim
+  set -o vi
+fi
+
+if test -n "$(command -v less)"
+then
+    PAGER="less -FirSwX"
+    MANPAGER="less -FiRswX"
+else
+    PAGER=more
+    MANPAGER="$PAGER"
+fi
+export PAGER MANPAGER
+
+# ================================================================
+# ACK
+# ================================================================
+ACK_PAGER="$PAGER"
+ACK_PAGER_COLOR="$PAGER"
+
+# ================================================================
+# NODE SETUP
+# ================================================================
+if test -n "$(command -v npm)"
+then
+  export NODE_PATH="/usr/local/lib/node_modules:$HOME/node_modules";
+  PATH="$PATH:/usr/local/lib/node_modules/npm/bin:$HOME/node_modules/.bin";
+  PATH="$PATH:/usr/local/share/npm/bin"
+fi
+
+# ================================================================
+# GO SETTINGS
+# ================================================================
+PATH="$PATH:/usr/local/go/bin"
+
+if test -n "$(command -v go)"
+then
+  export GOPATH="/usr/local/lib/go";
+  PATH="$PATH:/usr/local/lib/go/bin"
+fi
+
+test -n "$INTERACTIVE" -a -n "$LOGIN" && {
+    uname -npsr
+    uptime
+}
+
+# ================================================================
+# LOAD LOCAL ENV
+# ================================================================
+if [ -f "$HOME"/.env ]; then
+  source $HOME/.env
+fi

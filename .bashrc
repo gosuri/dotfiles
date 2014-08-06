@@ -1,24 +1,3 @@
-#!/bin/bash
-#
-# bash environment compiled from various sources
-# Greg Osuri <http://gr3g.me/about>
-
-: ${HOME=~}
-: ${LOGNAME=$(id -un)}
-: ${UNAME=$(uname)}
-
-# complete hostnames from this file
-: ${HOSTFILE=~/.ssh/known_hosts}
-
-# readline config
-: ${INPUTRC=~/.inputrc}
-
-# git bash completion
-
-: ${GIT_PS1_SHOWDIRTYSTATE=true}
-: ${GIT_PS1_SHOWSTASHSTATE=true}
-: ${GIT_PS1_SHOWUNTRACKEDFILES=true}
-
 # ================================================================
 # SHELL OPTIONS
 # ================================================================
@@ -38,100 +17,6 @@ shopt -s hostcomplete >/dev/null 2>&1
 shopt -s interactive_comments >/dev/null 2>&1
 shopt -u mailwarn >/dev/null 2>&1
 shopt -s no_empty_cmd_completion >/dev/null 2>&1
-
-# remove new mail stuff
-unset MAILCHECK
-
-# disable core dumps
-ulimit -S -c 0
-
-# default umask
-umask 0022
-
-# ================================================================
-# PATHS
-# ================================================================
-
-# we want the various sbins on the path along with /usr/local/bin
-PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
-PATH="/usr/local/bin:$PATH"
-
-# put ~/bin on PATH if you have it
-test -d "$HOME/bin" &&
-PATH="$HOME/bin:$PATH"
-
-# ================================================================
-# ENVIRONMENT CONFIGURATION
-# ================================================================
-
-# detect interactive shell
-case "$-" in
-    *i*) INTERACTIVE=yes ;;
-    *)   unset INTERACTIVE ;;
-esac
-
-# detect login shell
-case "$0" in
-    -*) LOGIN=yes ;;
-    *)  unset LOGIN ;;
-esac
-
-# always use PASSIVE mode ftp
-: ${FTP_PASSIVE:=1}
-export FTP_PASSIVE
-
-
-# ================================================================
-# RVM and ruby setup
-# ================================================================
-
-# Load RVM
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-
-
-# ================================================================
-# NodeJS setup
-# ================================================================
-
-
-if test -n "$(command -v npm)"
-then
-  export NODE_PATH="/usr/local/lib/node_modules:$HOME/node_modules";
-  PATH="$PATH:/usr/local/lib/node_modules/npm/bin:$HOME/node_modules/.bin";
-  PATH="$PATH:/usr/local/share/npm/bin"
-fi
-
-
-# history config
-HISTCONTROL=ignoreboth
-HISTFILESIZE=10000
-HISTSIZE=10000
-
-# ================================================================
-# PAGER / EDITOR
-# ================================================================
-
-# EDITOR
-if test -n "$(command -v vim)"
-then
-  export EDITOR=vim
-  set -o vi
-fi
-
-# PAGER
-if test -n "$(command -v less)"
-then
-    PAGER="less -FirSwX"
-    MANPAGER="less -FiRswX"
-else
-    PAGER=more
-    MANPAGER="$PAGER"
-fi
-export PAGER MANPAGER
-
-# Ack
-ACK_PAGER="$PAGER"
-ACK_PAGER_COLOR="$PAGER"
 
 # ================================================================
 # BASH COMPLETION 
@@ -209,29 +94,8 @@ _expand() {
 }
 
 # ================================================================
-# AWS EC2 Setup
-# ================================================================
-# Your certificate download:http://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key
-# Download two ".pem" files, one starting with `pk-`, and one starting with `cert-`.
-# You need to put both into a folder in your home directory, `~/.ec2`.
-if [ -f "$HOME"/.ec2/pk-*.pem ]; then
-  EC2_PRIVATE_KEY="$(/bin/ls "$HOME"/.ec2/pk-*.pem | /usr/bin/head -1)"
-fi
-
-if [ -f "$HOME"/.ec2/cert-*.pem ]; then
-  EC2_CERT="$(/bin/ls "$HOME"/.ec2/cert-*.pem | /usr/bin/head -1)"
-fi
-
-test -d  /usr/local/Library/LinkedKegs/ec2-api-tools/jars &&
-  EC2_HOME="/usr/local/Library/LinkedKegs/ec2-api-tools/jars"
-
-export EC2_HOME EC2_PRIVATE_KEY EC2_CERT
-
-
-# ================================================================
 # MACOX SETUP
 # ================================================================
-
 if [ "$UNAME" = Darwin ]; then
     # put mac ports on the paths if /opt/local exists
     test -x /opt/local -a ! -L /opt/local && {
@@ -244,7 +108,6 @@ if [ "$UNAME" = Darwin ]; then
         # nice little port alias
         alias port="sudo nice -n +18 $PORTS/bin/port"
     }
-
 
     test -x /usr/pkg -a ! -L /usr/pkg && {
         PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
@@ -266,9 +129,4 @@ fi
 # Use the color prompt by default when interactive
 test -n "$PS1" && prompt_color
 
-test -n "$INTERACTIVE" -a -n "$LOGIN" && {
-    uname -npsr
-    uptime
-}
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+source $HOME/.dotfiles/.shellrc
