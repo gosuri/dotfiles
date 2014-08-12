@@ -51,3 +51,11 @@ for i in "${nocorrects[@]}"
 do
   alias $i="nocorrect $i"
 done
+
+# ================================================================
+# KEY BINDINGS
+# ================================================================
+# 
+# Binding <ctrl-r> to history search
+# <C-R> mv * /target
+bindkey '^R' history-incremental-pattern-search-backward
