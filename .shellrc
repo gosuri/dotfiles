@@ -7,6 +7,11 @@
 set -o notify
 
 # ================================================================
+# PROJECTS Workspace
+# ================================================================
+export PROJECTS_HOME=$HOME/projects
+
+# ================================================================
 # PATHS
 # ================================================================
 # we want the various sbins on the path along with /usr/local/bin
@@ -78,8 +83,7 @@ ACK_PAGER_COLOR="$PAGER"
 # ================================================================
 # NODE SETUP
 # ================================================================
-if test -n "$(command -v npm)"
-then
+if test -n "$(command -v npm)"; then
   export NODE_PATH="/usr/local/lib/node_modules:$HOME/node_modules";
   PATH="$PATH:/usr/local/lib/node_modules/npm/bin:$HOME/node_modules/.bin";
   PATH="$PATH:/usr/local/share/npm/bin"
@@ -88,14 +92,14 @@ fi
 # ================================================================
 # GO SETTINGS
 # ================================================================
-PATH="$PATH:/usr/local/go/bin"
-
-if test -n "$(command -v go)"
-then
-  export GOPATH="/usr/local/lib/go";
-  PATH="$PATH:/usr/local/lib/go/bin"
+if [ -z $GOPATH ]; then
+  export GOPATH=$PROJECTS_HOME/gocode
+  export PATH=$PATH:$PROJECTS_HOME/go/bin:$GOPATH/bin
 fi
 
+# ===============================================================
+# SERVER UPTIME
+# ===============================================================
 test -n "$INTERACTIVE" -a -n "$LOGIN" && {
     uname -npsr
     uptime

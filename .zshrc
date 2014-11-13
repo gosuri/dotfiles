@@ -3,14 +3,13 @@
 # ================================================================
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="sorin-custom"
-source $ZSH/oh-my-zsh.sh
 
 # ================================================================
 # PLUGINS
 # ================================================================
 # Plugins are located under ~/.oh-my-zsh/plugins/* and 
 # custom plugins should under ~/.oh-my-zsh/custom/plugins/
-plugins=(git bundler github git-flow knife)
+plugins=(git bundler github git-flow aws)
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -31,6 +30,7 @@ plugins=(git bundler github git-flow knife)
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 # COMPLETION_WAITING_DOTS="true"
 
+source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/.shellrc
 
 # ================================================================
@@ -40,13 +40,12 @@ source $HOME/.dotfiles/.shellrc
 autoload -U zmv
 alias mmv='noglob zmv -W'
 alias faye='rackup faye.ru -s thin -E production'
-alias be='bundle exec'
 
 # ================================================================
 # NO CORRECTS
 # ================================================================
 # Disable zsh auto correct 
-nocorrects=( "knife" "storm" "go" "rspec" )
+nocorrects=( "knife" "storm" "rspec" )
 for i in "${nocorrects[@]}"
 do
   alias $i="nocorrect $i"
