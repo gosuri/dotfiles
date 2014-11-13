@@ -34,44 +34,49 @@ VIM=.vim
 ZSHRC=.zshrc
 
 # .gitconfig
-function getName() {
-  printf "Your name: "
-  read -r name
+
+bold=`tput bold`
+normal=`tput sgr0`
+
+_log() {
+  echo "==> $1"
 }
 
-function getEmail() { 
-  printf "Your email: "
-  read -r email
-}
-
-function getGHUser() {
-  printf "Your github username: "
-  read -r github_user
-}
-
-function renderTempl() {
-  cat $GIT_CONF_TMPL | sed "s/@name/$name/g" | sed "s/@email/$email/g" | sed "s/@github_user/$github_user/g"
+function _setGitAttr() {
+	printf "$1: "
+	read -r val
+	if [ -n "$val" ]; then
+		cmd="git config --global --replace-all $2 '$val'"
+		_log "exec: $cmd"
+		eval "$cmd"
+		_log "gitconfig: $2 is $(git config $2)"
+    
+    # 3rd attribute
+		if [ -n "$3" ]; then
+			cmd="git config --global $3 $val"
+			_log "exec: $cmd"
+			eval "$cmd"
+		fi
+	else
+		_log "skipping $2 $3"
+	fi
 }
 
 function install_gitconfig() {
-  echo "--> installing .gitconfig"
-  getName
-  getEmail
-  getGHUser
-  if [ -n "$name" ] && [ -n $email ] && [ -n $github_user ]
-  then
-    renderTempl > $DOTFILES/.gitconfig
-    echo "--> generated $DOTFILES/.gitconfig"
-  else
-    echo "--> could not install .gitconfig due to missing info"
-  fi
-  echo "--> finished installing .gitconfig"
+  _log "${bold}Setting .gitconfig${normal}"
+  echo 
+  cp $GIT_CONF_TMPL $HOME/.gitconfig
+  _setGitAttr "Your name" "user.name"
+  echo 
+  _setGitAttr "Your email" "user.email" "sendmail.smtpuser"
+  echo 
+  _setGitAttr "Your github username" "github.username"
 }
 
 function install_zsh() {
   if ! [ -n "$(command -v zsh)" ]
   then
-    echo "--> ZSH is not found. Installing ZSH"
+    _log "ZSH is not found. Installing ZSH"
     sudo apt-get install zsh
   fi
   chsh -s /bin/zsh
@@ -80,20 +85,20 @@ function install_zsh() {
 function install_omzsh() {
   if test -d $HOME/.oh-my-zsh
   then
-    echo "--> skipping .oh-my-zsh. $HOME/.oh-my-zsh exists"
+    _log "skipping .oh-my-zsh. $HOME/.oh-my-zsh exists"
   else
-    echo "--> installing oh-my-zsh"
+    _log "installing oh-my-zsh"
     git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
   fi
 
   if test -f $HOME/.oh-my-zsh/themes/sorin-custom.zsh-theme
   then
-    echo "--> skipping: sorin-custom.zsh-theme exists"
+    _log "skipping: sorin-custom.zsh-theme exists"
   else
-    echo "--> linking sorin-custom zsh theme"
+    _log "linking sorin-custom zsh theme"
     ln -s $DOTFILES/themes/sorin-custom.zsh-theme $HOME/.oh-my-zsh/themes/sorin-custom.zsh-theme
   fi
-  echo "--> finished: oh-my-zsh"
+  _log "finished: oh-my-zsh"
 }
 
 function makeLink() {
