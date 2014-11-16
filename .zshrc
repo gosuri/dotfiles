@@ -51,6 +51,9 @@ do
   alias $i="nocorrect $i"
 done
 
+# Allow [ or ] whereever you want
+unsetopt nomatch
+
 # ================================================================
 # KEY BINDINGS
 # ================================================================
