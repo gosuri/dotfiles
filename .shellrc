@@ -45,10 +45,7 @@ export FTP_PASSIVE
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-if test -n "$(command -v rbenv)"
-then
-  eval "$(rbenv init -)"
-fi
+[[ -n "$(command -v rbenv)" ]] && eval "$(rbenv init -)"
 
 # history config
 HISTCONTROL=ignoreboth
@@ -58,19 +55,17 @@ HISTSIZE=10000
 # ================================================================
 # PAGER / EDITOR
 # ================================================================
-if test -n "$(command -v vim)"
-then
+if [[ -n "$(command -v vim)" ]]; then
   export EDITOR=vim
   set -o vi
 fi
 
-if test -n "$(command -v less)"
-then
-    PAGER="less -FirSwX"
-    MANPAGER="less -FiRswX"
+if [[ -n "$(command -v less)" ]]; then
+  PAGER="less -FirSwX"
+  MANPAGER="less -FiRswX"
 else
-    PAGER=more
-    MANPAGER="$PAGER"
+  PAGER=more
+  MANPAGER="$PAGER"
 fi
 export PAGER MANPAGER
 
@@ -83,7 +78,7 @@ ACK_PAGER_COLOR="$PAGER"
 # ================================================================
 # NODE SETUP
 # ================================================================
-if test -n "$(command -v npm)"; then
+if [[ -n "$(command -v npm)" ]]; then
   export NODE_PATH="/usr/local/lib/node_modules:$HOME/node_modules";
   PATH="$PATH:/usr/local/lib/node_modules/npm/bin:$HOME/node_modules/.bin";
   PATH="$PATH:/usr/local/share/npm/bin"
@@ -92,7 +87,7 @@ fi
 # ================================================================
 # GO SETTINGS
 # ================================================================
-if [ -z $GOPATH ]; then
+if [[ -z $GOPATH ]]; then
   export GOPATH=$PROJECTS_HOME/gocode
   export PATH=$PATH:$PROJECTS_HOME/go/bin:$GOPATH/bin
 fi
@@ -100,14 +95,18 @@ fi
 # ===============================================================
 # SERVER UPTIME
 # ===============================================================
-test -n "$INTERACTIVE" -a -n "$LOGIN" && {
-    uname -npsr
-    uptime
-}
+if [[ -n "$INTERACTIVE" && -n "$LOGIN" ]]; then
+  uname -npsr
+  uptime
+fi
 
 # ================================================================
 # LOAD LOCAL ENV
 # ================================================================
-if [ -f "$HOME"/.env ]; then
-  source $HOME/.env
-fi
+[[ -f "$HOME"/.env ]] && source $HOME/.env
+
+# ================================================================
+# INITIALIZE boot2docker shell variables
+# ================================================================
+
+[[ -n "$(command -v boot2docker)" ]] && $(boot2docker shellinit 2> /dev/null)
