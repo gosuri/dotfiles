@@ -330,6 +330,21 @@ function! VagrantProvision()
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Test Kitchen 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! KitchenConverge()
+  exec ":!kitchen converge"
+endfunction
+
+function! KitchenTest()
+  exec ":!kitchen test"
+endfunction
+
+map <leader>kc :call KitchenConverge()<cr>
+map <leader>kt :call KitchenTest()<cr>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FOR EDITING CRON TABS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au BufEnter /private/tmp/crontab.* setl backupcopy=yes
