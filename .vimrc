@@ -332,6 +332,10 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Test Kitchen 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>kc :call KitchenConverge()<cr>
+map <leader>kt :call KitchenTest()<cr>
+map <leader>kv :call KitchenVerify()<cr>
+
 function! KitchenConverge()
   exec ":!kitchen converge"
 endfunction
@@ -340,9 +344,23 @@ function! KitchenTest()
   exec ":!kitchen test"
 endfunction
 
-map <leader>kc :call KitchenConverge()<cr>
-map <leader>kt :call KitchenTest()<cr>
+function! KitchenVerify()
+  exec ":!kitchen verify"
+endfunction
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Terraform
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>tp :call TerraformPlan()<cr>
+map <leader>ta :call TerraformApply()<cr>
+
+function! TerraformPlan() 
+  exec ":!terraform get && terraform plan -module-depth=1"
+endfunction
+
+function! TerraformApply() 
+  exec ":!terraform get && terraform apply"
+endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FOR EDITING CRON TABS
