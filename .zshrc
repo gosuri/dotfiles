@@ -1,3 +1,7 @@
+# Debug flag
+DF_DEBUG=0
+starts=$(date +%s)
+
 # ================================================================
 # OH MY ZSH SETUP
 # ================================================================
@@ -61,3 +65,6 @@ unsetopt nomatch
 # Binding <ctrl-r> to history search
 # <C-R> mv * /target
 bindkey '^R' history-incremental-pattern-search-backward
+
+ends=$(date +%s)
+[ "${DF_DEBUG}" == "1" ] && echo "${HOME}/.zshrc load elapsed $(($ends - $starts))s"

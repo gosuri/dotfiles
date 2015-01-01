@@ -19,8 +19,7 @@ PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
 PATH="/usr/local/bin:$PATH"
 
 # put ~/bin on PATH if you have it
-test -d "$HOME/bin" &&
-PATH="$HOME/bin:$PATH"
+[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
 
 # ================================================================
 # ENVIRONMENT CONFIGURATION
@@ -40,12 +39,9 @@ esac
 export FTP_PASSIVE
 
 # ================================================================
-# RVM, RBENV AND RUBY SETUP
+# RBENV
 # ================================================================
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
-[[ -n "$(command -v rbenv)" ]] && eval "$(rbenv init -)"
+[ "$(command -v rbenv)" ] && eval "$(rbenv init -)"
 
 # history config
 HISTCONTROL=ignoreboth
@@ -55,12 +51,9 @@ HISTSIZE=10000
 # ================================================================
 # PAGER / EDITOR
 # ================================================================
-if [[ -n "$(command -v vim)" ]]; then
-  export EDITOR=vim
-  set -o vi
-fi
+[ "$(command -v vim)" ] && export EDITOR=vim && set -o vi
 
-if [[ -n "$(command -v less)" ]]; then
+if [ -n "$(command -v less)" ]; then
   PAGER="less -FirSwX"
   MANPAGER="less -FiRswX"
 else
@@ -78,7 +71,7 @@ ACK_PAGER_COLOR="$PAGER"
 # ================================================================
 # NODE SETUP
 # ================================================================
-if [[ -n "$(command -v npm)" ]]; then
+if [ "$(command -v npm)" ]; then
   export NODE_PATH="/usr/local/lib/node_modules:$HOME/node_modules";
   PATH="$PATH:/usr/local/lib/node_modules/npm/bin:$HOME/node_modules/.bin";
   PATH="$PATH:/usr/local/share/npm/bin"
@@ -87,7 +80,8 @@ fi
 # ================================================================
 # GO SETTINGS
 # ================================================================
-if [[ -z $GOPATH ]]; then
+# Set GOPATH if missing
+if [ -z "${GOPATH}" ]; then
   export GOPATH=$PROJECTS_HOME/gocode
   export PATH=$PATH:$PROJECTS_HOME/go/bin:$GOPATH/bin
 fi
@@ -103,10 +97,11 @@ fi
 # ================================================================
 # LOAD LOCAL ENV
 # ================================================================
-[[ -f "$HOME"/.env ]] && source $HOME/.env
+[ -f "${HOME}"/.env ] && source $HOME/.env
 
 # ================================================================
 # INITIALIZE boot2docker shell variables
 # ================================================================
-
-[[ -n "$(command -v boot2docker)" ]] && $(boot2docker shellinit 2> /dev/null)
+[ "$(command -v boot2docker)" ] \
+  && [ "$(ps ax | grep boot2docker-vm | grep -v "grep")" ] \
+    && $(boot2docker shellinit 2> /dev/null)
