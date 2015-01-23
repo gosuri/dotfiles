@@ -66,6 +66,21 @@ function config_git() {
   set_git_attr "Your name" "user.name"
   set_git_attr "Your email" "user.email" "sendmail.smtpuser"
   set_git_attr "Your github username" "github.username"
+
+  # enable git credentials helper on mac
+  if [[ "$(uname)" == "Darwin" ]]; then
+    local path="$(dirname $(which git))/git-credential-osxkeychain"
+    if [[ -f ${path} ]]; then
+      git config --global credential.helper osxkeychain
+    else
+      read -e -p "    ${bold}Would you like to install git-credential-osxkeychain plugin?(Y/n): ${reset}" install_git_cred
+      if [[ "${install_git_cred}" == "Y" ]]; then
+        curl -sLo "${path}" https://github-media-downloads.s3.amazonaws.com/osx/git-credential-osxkeychain
+        chmod +x ${path}
+        git config --global credential.helper osxkeychain
+      fi
+    fi
+  fi
 }
 
 function abort_if_missing_command() {
