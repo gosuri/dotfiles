@@ -23,7 +23,6 @@
 
 DOTFILES=$HOME/.dotfiles
 GIT_CONF_TMPL=$DOTFILES/templates/gitconfig.template
-
 BASH_COMPLETION=.bash_completion
 BASH_PROFILE=.bash_profile
 BASHRC=.bashrc
@@ -123,7 +122,6 @@ function makeAllLinks() {
   makeLink $BASH_COMPLETION
   makeLink $BASH_PROFILE
   makeLink $BASHRC
-  makeLink $GITCONFIG
   makeLink $TMUX_CONF
   makeLink $VIMRC
   makeLink $VIM
@@ -133,7 +131,7 @@ function makeAllLinks() {
 
 function main() {
   echo "--> installing dotfiles to $DOTFILES"
-  pushd $DOTFILES > /dev/null
+  pushd $DOTFILES > /dev/null &2>1
   install_gitconfig
   install_omzsh
   makeAllLinks
