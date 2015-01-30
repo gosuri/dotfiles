@@ -19,10 +19,22 @@ set -o pipefail
 function run() {
   local should_install_zsh=0
   abort_if_missing_command "git" "git is required"
+
   # abort if the dotfiles directory is missing
   [[ -d $DOTFILES ]] || abort "${DOTFILES} is missing"
+
+  # abort if 
+
+  if [[ "$(uname)" == "Darwin" ]]; then
+    if ! [ type "brew" >/dev/null 2>&1 ]; then
+      # Ask for ZSH
+    fi
+    abort_if_missing_command "git" "git is required"
+  fi
+
   info "Installing dotfiles from ${DOTFILES}"
-  echo 
+  echo
+
   # configure git
   config_git
 
@@ -38,6 +50,9 @@ function config_shell() {
         # install ZSH
         config_shell
       else
+        curl -L http://install.ohmyz.sh | sh
+        if [[ "$(uname)" == "Darwin" ]]; then
+        fi
         log "skipping zsh"
       fi
       ;;

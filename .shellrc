@@ -9,7 +9,7 @@ set -o notify
 # ================================================================
 # Code workspace
 # ================================================================
-export CODEHOME=$HOME/code
+export CODEHOME=$HOME/projects
 
 # ================================================================
 # PATHS
@@ -83,7 +83,7 @@ fi
 # Set GOPATH if missing
 if [ -z "${GOPATH}" ]; then
   export GOPATH=$CODEHOME/go
-  export PATH=$GOPATH/bin:$PATH
+  export PATH=$GOPATH/bin:$PATH:/usr/local/opt/go/libexec/bin
 fi
 
 # ===============================================================
