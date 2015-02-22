@@ -238,7 +238,7 @@ function! OpenTestAlternate()
   endif
 endfunction
 
-" switches between file.go and file_test.go
+" switches between <current_file>.go and <current_file>_test.go
 function! AlternateForCurrentFile_go()
   let current_file = expand("%")
   let new_file = current_file
