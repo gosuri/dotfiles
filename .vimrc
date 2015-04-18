@@ -55,6 +55,9 @@ filetype plugin indent on
 set wildmode=longest,list
 " make tab completion for files/buffers act like bash
 set wildmenu
+" recognize file types from file
+set modelines=5
+
 let mapleader=","
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -390,3 +393,4 @@ au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cmap w!! %!sudo tee > /dev/null %
 
+au BufReadPost *.tf set filetype=ruby

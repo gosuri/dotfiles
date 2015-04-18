@@ -15,11 +15,10 @@ export CODEHOME=$HOME/projects
 # PATHS
 # ================================================================
 # we want the various sbins on the path along with /usr/local/bin
-PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
-PATH="/usr/local/bin:$PATH"
+export PATH="$PATH:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin"
 
 # put ~/bin on PATH if you have it
-[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
+[ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
 
 # ================================================================
 # ENVIRONMENT CONFIGURATION
@@ -38,15 +37,23 @@ esac
 : ${FTP_PASSIVE:=1}
 export FTP_PASSIVE
 
+# history config
+HISTCONTROL=ignoreboth
+HISTFILESIZE=10000
+HISTSIZE=10000
+
 # ================================================================
 # RBENV
 # ================================================================
 [ "$(command -v rbenv)" ] && eval "$(rbenv init -)"
 
-# history config
-HISTCONTROL=ignoreboth
-HISTFILESIZE=10000
-HISTSIZE=10000
+# ================================================================
+# RVM
+# ================================================================
+[ "$(command -v rvm)" ] && \
+  export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+  # Load RVM into a shell session *as a function*
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
 
 # ================================================================
 # PAGER / EDITOR
