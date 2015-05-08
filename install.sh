@@ -23,7 +23,6 @@
 
 DOTFILES=$HOME/.dotfiles
 GIT_CONF_TMPL=$DOTFILES/templates/gitconfig.template
-
 BASH_COMPLETION=.bash_completion
 BASH_PROFILE=.bash_profile
 BASHRC=.bashrc

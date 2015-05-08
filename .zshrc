@@ -49,7 +49,7 @@ alias faye='rackup faye.ru -s thin -E production'
 # NO CORRECTS
 # ================================================================
 # Disable zsh auto correct 
-nocorrects=( "knife" "storm" "rspec" )
+nocorrects=("storm" "rspec" )
 for i in "${nocorrects[@]}"
 do
   alias $i="nocorrect $i"
@@ -68,3 +68,5 @@ bindkey '^R' history-incremental-pattern-search-backward
 
 ends=$(date +%s)
 [ "${DF_DEBUG}" == "1" ] && echo "${HOME}/.zshrc load elapsed $(($ends - $starts))s"
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

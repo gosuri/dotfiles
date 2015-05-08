@@ -55,6 +55,9 @@ filetype plugin indent on
 set wildmode=longest,list
 " make tab completion for files/buffers act like bash
 set wildmenu
+" recognize file types from file
+set modelines=5
+
 let mapleader=","
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -231,9 +234,26 @@ map <leader>F :CtrlPClearAllCaches<cr>\|:CtrlP %%<cr>
 " SWITCH BETWEEN TEST AND PRODUCTION CODE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! OpenTestAlternate()
-  let new_file = AlternateForCurrentFile()
-  exec ':e ' . new_file
+  if &filetype == "go"
+    exec ':e ' .  AlternateForCurrentFile_go()
+  elseif &filetype == "ruby"
+    exec ':e ' . AlternateForCurrentFile()
+  endif
 endfunction
+
+" switches between <current_file>.go and <current_file>_test.go
+function! AlternateForCurrentFile_go()
+  let current_file = expand("%")
+  let new_file = current_file
+  " check if the current file is a test file
+  let in_test = match(current_file, '_test.go') != -1
+  if in_test
+    return substitute(new_file, '_test\.go$', '.go', '')
+  else
+    return substitute(new_file, '\.go$', '_test.go', '')
+  endif
+endfunction
+
 function! AlternateForCurrentFile()
   let current_file = expand("%")
   let new_file = current_file
@@ -255,6 +275,7 @@ function! AlternateForCurrentFile()
   endif
   return new_file
 endfunction
+
 nnoremap <leader>. :call OpenTestAlternate()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -372,3 +393,4 @@ au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cmap w!! %!sudo tee > /dev/null %
 
+au BufReadPost *.tf set filetype=ruby
