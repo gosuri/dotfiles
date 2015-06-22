@@ -376,11 +376,11 @@ map <leader>tp :call TerraformPlan()<cr>
 map <leader>ta :call TerraformApply()<cr>
 
 function! TerraformPlan() 
-  exec ":!terraform get && terraform plan -module-depth=1"
+  exec ":!terraform get && terraform plan -module-depth=1 -input=false"
 endfunction
 
 function! TerraformApply() 
-  exec ":!terraform get && terraform apply"
+  exec ":!terraform get && terraform apply -input=false"
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -412,5 +412,3 @@ au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 " OVERRIDE READ-ONLY FILES
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cmap w!! %!sudo tee > /dev/null %
-
-au BufReadPost *.tf set filetype=ruby

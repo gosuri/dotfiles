@@ -26,9 +26,6 @@ function run() {
   # abort if 
 
   if [[ "$(uname)" == "Darwin" ]]; then
-    if ! [ type "brew" >/dev/null 2>&1 ]; then
-      # Ask for ZSH
-    fi
     abort_if_missing_command "git" "git is required"
   fi
 
@@ -39,6 +36,8 @@ function run() {
   config_git
 
   config_shell
+
+  install_omzsh
 }
 
 function config_shell() {
@@ -51,8 +50,6 @@ function config_shell() {
         config_shell
       else
         curl -L http://install.ohmyz.sh | sh
-        if [[ "$(uname)" == "Darwin" ]]; then
-        fi
         log "skipping zsh"
       fi
       ;;
@@ -96,6 +93,25 @@ function config_git() {
       fi
     fi
   fi
+}
+
+function install_omzsh() {
+  if test -d $HOME/.oh-my-zsh
+  then
+    log "skipping .oh-my-zsh. $HOME/.oh-my-zsh exists"
+  else
+    log "installing oh-my-zsh"
+    git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
+  fi
+
+  if test -f $HOME/.oh-my-zsh/themes/sorin-custom.zsh-theme
+  then
+    log "skipping: sorin-custom.zsh-theme exists"
+  else
+    log "linking sorin-custom zsh theme"
+    ln -s $DOTFILES/themes/sorin-custom.zsh-theme $HOME/.oh-my-zsh/themes/sorin-custom.zsh-theme
+  fi
+  log "finished: oh-my-zsh"
 }
 
 function abort_if_missing_command() {
