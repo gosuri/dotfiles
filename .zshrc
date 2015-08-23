@@ -2,6 +2,8 @@
 DF_DEBUG=0
 starts=$(date +%s)
 
+export FPATH=/usr/share/zsh/site-functions:$FPATH  
+
 # ================================================================
 # OH MY ZSH SETUP
 # ================================================================
@@ -13,7 +15,7 @@ ZSH_THEME="sorin-custom"
 # ================================================================
 # Plugins are located under ~/.oh-my-zsh/plugins/* and 
 # custom plugins should under ~/.oh-my-zsh/custom/plugins/
-plugins=(git bundler github git-flow aws)
+plugins=(golang git bundler github git-flow aws emoji)
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -68,5 +70,3 @@ bindkey '^R' history-incremental-pattern-search-backward
 
 ends=$(date +%s)
 [ "${DF_DEBUG}" == "1" ] && echo "${HOME}/.zshrc load elapsed $(($ends - $starts))s"
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

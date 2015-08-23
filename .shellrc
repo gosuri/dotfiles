@@ -79,9 +79,7 @@ ACK_PAGER_COLOR="$PAGER"
 # NODE SETUP
 # ================================================================
 if [ "$(command -v npm)" ]; then
-  export NODE_PATH="/usr/local/lib/node_modules:$HOME/node_modules";
-  PATH="$PATH:/usr/local/lib/node_modules/npm/bin:$HOME/node_modules/.bin";
-  PATH="$PATH:/usr/local/share/npm/bin"
+  export PATH=$HOME/.node/bin:$PATH
 fi
 
 # ================================================================
@@ -101,10 +99,6 @@ if [[ -n "$INTERACTIVE" && -n "$LOGIN" ]]; then
   uptime
 fi
 
-# ================================================================
-# LOAD LOCAL ENV
-# ================================================================
-[ -f "${HOME}"/.env ] && source $HOME/.env
 
 # ================================================================
 # INITIALIZE boot2docker shell variables
@@ -114,6 +108,9 @@ fi
     && $(boot2docker shellinit 2> /dev/null)
 
 
+# ================================================================
+# HELPER function for chef sdk
+# ================================================================
 function chef-init() {
   case $SHELL in
     *zsh)
@@ -124,3 +121,33 @@ function chef-init() {
       ;;
   esac
 }
+
+# ================================================================
+# Helper function to use go 1.5
+# ================================================================
+
+function go15() {
+  brew switch go 1.5 > /dev/null 2>&1
+  export GOPATH=$CODEHOME/go15
+  export PATH=$GOPATH/bin:$PATH:/usr/local/opt/go/libexec/bin
+}
+
+# ================================================================
+# Helper function to use go 1.4.2
+# ================================================================
+function go14() {
+  brew switch go 1.4.2 > /dev/null 2>&1
+  export GOPATH=$CODEHOME/go14
+  export PATH=$GOPATH/bin:$PATH:/usr/local/opt/go/libexec/bin
+}
+
+# set go 1.5 as default
+# go15
+
+# set go 1.4.2 as default
+go14
+
+# ================================================================
+# LOAD LOCAL ENV
+# ================================================================
+[ -f "${HOME}"/.env ] && source $HOME/.env
