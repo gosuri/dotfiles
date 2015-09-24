@@ -101,12 +101,11 @@ fi
 
 
 # ================================================================
-# INITIALIZE boot2docker shell variables
+# INITIALIZE docker-machine shell variables
 # ================================================================
-[ "$(command -v boot2docker)" ] \
-  && [ "$(ps ax | grep boot2docker-vm | grep -v "grep")" ] \
-    && $(boot2docker shellinit 2> /dev/null)
-
+[ "$(command -v docker-machine)" ] \
+  && [ "$(docker-machine status dev)" = "Running" ] \
+  && eval "$(docker-machine env dev)"
 
 # ================================================================
 # HELPER function for chef sdk

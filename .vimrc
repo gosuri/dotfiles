@@ -420,3 +420,5 @@ if exists("g:ctrl_user_command")
   unlet g:ctrlp_user_command
 endif
 set wildignore+=Godeps
+
+au BufRead,BufNewFile *.bats setfiletype sh

@@ -46,6 +46,7 @@
 (go-doc-vertical)	vim-go.txt	/*(go-doc-vertical)*
 (go-files)	vim-go.txt	/*(go-files)*
 (go-freevars)	vim-go.txt	/*(go-freevars)*
+(go-generate)	vim-go.txt	/*(go-generate)*
 (go-implements)	vim-go.txt	/*(go-implements)*
 (go-info)	vim-go.txt	/*(go-info)*
 (go-install)	vim-go.txt	/*(go-install)*
@@ -72,6 +73,7 @@
 :GoFiles	vim-go.txt	/*:GoFiles*
 :GoFmt	vim-go.txt	/*:GoFmt*
 :GoFreevars	vim-go.txt	/*:GoFreevars*
+:GoGenerate	vim-go.txt	/*:GoGenerate*
 :GoImplements	vim-go.txt	/*:GoImplements*
 :GoImport	vim-go.txt	/*:GoImport*
 :GoImportAs	vim-go.txt	/*:GoImportAs*

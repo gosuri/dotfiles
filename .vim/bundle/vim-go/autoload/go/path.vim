@@ -65,10 +65,10 @@ function! go#path#HasPath(path)
     return hasA || hasB
 endfunction
 
-" Detect returns the current GOPATH. If a package manager is used, such
-" as Godeps or something like gb (not supported yet), it will modify the
-" GOPATH so those directories take precedence over the current GOPATH. It also
-" detects diretories whose are outside GOPATH.
+" Detect returns the current GOPATH. If a package manager is used, such as
+" Godeps, GB, it will modify the GOPATH so those directories take precedence
+" over the current GOPATH. It also detects diretories whose are outside
+" GOPATH.
 function! go#path#Detect()
     let gopath = $GOPATH
 
@@ -87,6 +87,13 @@ function! go#path#Detect()
     let src_root = finddir("src", current_dir .";")
     if !empty(src_root)
         let src_path = fnamemodify(src_root, ':p:h:h') . go#util#PathSep()
+
+        " gb vendor plugin
+        " (https://github.com/constabulary/gb/tree/master/cmd/gb-vendor)
+        let gb_vendor_root = src_path . "vendor" . go#util#PathSep()
+        if !empty(gb_vendor_root) && !go#path#HasPath(gb_vendor_root)
+            let gopath = gb_vendor_root . go#util#PathListSep() . gopath
+        endif
 
         if !go#path#HasPath(src_path)
             let gopath =  src_path . go#util#PathListSep() . gopath
