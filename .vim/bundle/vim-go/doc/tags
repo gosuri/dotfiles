@@ -19,9 +19,13 @@
 'g:go_highlight_methods'	vim-go.txt	/*'g:go_highlight_methods'*
 'g:go_highlight_operators'	vim-go.txt	/*'g:go_highlight_operators'*
 'g:go_highlight_space_tab_error'	vim-go.txt	/*'g:go_highlight_space_tab_error'*
+'g:go_highlight_string_spellcheck	vim-go.txt	/*'g:go_highlight_string_spellcheck*
 'g:go_highlight_structs'	vim-go.txt	/*'g:go_highlight_structs'*
 'g:go_highlight_trailing_whitespace_error'	vim-go.txt	/*'g:go_highlight_trailing_whitespace_error'*
 'g:go_jump_to_error'	vim-go.txt	/*'g:go_jump_to_error'*
+'g:go_metalinter_command'	vim-go.txt	/*'g:go_metalinter_command'*
+'g:go_metalinter_enabled'	vim-go.txt	/*'g:go_metalinter_enabled'*
+'g:go_metalinter_path'	vim-go.txt	/*'g:go_metalinter_path'*
 'g:go_oracle_scope'	vim-go.txt	/*'g:go_oracle_scope'*
 'g:go_play_browser_command'	vim-go.txt	/*'g:go_play_browser_command'*
 'g:go_play_open_browser'	vim-go.txt	/*'g:go_play_open_browser'*
@@ -50,6 +54,7 @@
 (go-implements)	vim-go.txt	/*(go-implements)*
 (go-info)	vim-go.txt	/*(go-info)*
 (go-install)	vim-go.txt	/*(go-install)*
+(go-metalinter)	vim-go.txt	/*(go-metalinter)*
 (go-referrers)	vim-go.txt	/*(go-referrers)*
 (go-rename)	vim-go.txt	/*(go-rename)*
 (go-run)	vim-go.txt	/*(go-run)*
@@ -82,6 +87,7 @@
 :GoInstall	vim-go.txt	/*:GoInstall*
 :GoInstallBinaries	vim-go.txt	/*:GoInstallBinaries*
 :GoLint	vim-go.txt	/*:GoLint*
+:GoMetaLinter	vim-go.txt	/*:GoMetaLinter*
 :GoOracleScope	vim-go.txt	/*:GoOracleScope*
 :GoPath	vim-go.txt	/*:GoPath*
 :GoPlay	vim-go.txt	/*:GoPlay*
