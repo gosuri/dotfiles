@@ -82,14 +82,6 @@ if [ "$(command -v npm)" ]; then
   export PATH=$HOME/.node/bin:$PATH
 fi
 
-# ================================================================
-# GO SETTINGS
-# ================================================================
-# Set GOPATH if missing
-if [ -z "${GOPATH}" ]; then
-  export GOPATH=$CODEHOME/go
-  export PATH=$GOPATH/bin:$PATH:/usr/local/opt/go/libexec/bin
-fi
 
 # ===============================================================
 # SERVER UPTIME
@@ -98,7 +90,6 @@ if [[ -n "$INTERACTIVE" && -n "$LOGIN" ]]; then
   uname -npsr
   uptime
 fi
-
 
 # ================================================================
 # INITIALIZE docker-machine shell variables
@@ -122,29 +113,21 @@ function chef-init() {
 }
 
 # ================================================================
-# Helper function to use go 1.5
+# GO SETTINGS
 # ================================================================
-
-function go15() {
-  brew switch go 1.5 > /dev/null 2>&1
-  export GOPATH=$CODEHOME/go15
+# Set GOPATH if missing
+if [ -z "${GOPATH}" ]; then
+  export GOPATH=$CODEHOME/go
   export PATH=$GOPATH/bin:$PATH:/usr/local/opt/go/libexec/bin
-}
+fi
 
 # ================================================================
-# Helper function to use go 1.4.2
+# LOAD GO Dev Helper
 # ================================================================
-function go14() {
-  brew switch go 1.4.2 > /dev/null 2>&1
-  export GOPATH=$CODEHOME/go14
-  export PATH=$GOPATH/bin:$PATH:/usr/local/opt/go/libexec/bin
-}
-
-# set go 1.5 as default
-# go15
+[ -f $HOME/.dotfiles/tools/gohelpers.sh ] && source $HOME/.dotfiles/tools/gohelpers.sh
 
 # set go 1.4.2 as default
-go14
+use-go14
 
 # ================================================================
 # LOAD LOCAL ENV

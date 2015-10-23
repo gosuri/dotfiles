@@ -15,7 +15,7 @@ ZSH_THEME="sorin-custom"
 # ================================================================
 # Plugins are located under ~/.oh-my-zsh/plugins/* and 
 # custom plugins should under ~/.oh-my-zsh/custom/plugins/
-plugins=(golang git bundler github git-flow aws emoji)
+plugins=(ovrclk golang git bundler github git-flow aws emoji)
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -70,3 +70,5 @@ bindkey '^R' history-incremental-pattern-search-backward
 
 ends=$(date +%s)
 [ "${DF_DEBUG}" == "1" ] && echo "${HOME}/.zshrc load elapsed $(($ends - $starts))s"
+
+unalias gb
