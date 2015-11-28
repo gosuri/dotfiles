@@ -364,33 +364,32 @@ function! TerraformApply()
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Go
+" GO
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 function! GoTest() 
   let pkgname = substitute(expand("%:p:h"),getcwd(),'','')
   exec ":!go test -parallel=4 -v ." . pkgname
 endfunction
 
-"au FileType go nmap <leader>t :call GoTest() <cr>
-au FileType go nmap <leader>t <Plug>(go-test)
-
+" vim-go mappings
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 
 au FileType go nmap <Leader>ds <Plug>(go-def-split)
 au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <Leader>dt <Plug>(go-def-tab)
-
 au FileType go nmap <Leader>gd <Plug>(go-doc)
 au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
 au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
-
 au FileType go nmap <Leader>s <Plug>(go-implements)
 au FileType go nmap <Leader>i <Plug>(go-info)
-au FileType go nmap <Leader>ge <Plug>(go-rename)
+au FileType go nmap <Leader>e <Plug>(go-rename)
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" PROTO BUF
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup filetype
   au! BufRead,BufNewFile *.proto setfiletype proto
 augroup end
