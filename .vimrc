@@ -229,7 +229,6 @@ map <leader>gg :topleft 100 :split Gemfile<cr>
 map <leader>f :CtrlPClearAllCaches<cr>\|:CtrlP<cr>
 map <leader>F :CtrlPClearAllCaches<cr>\|:CtrlP %%<cr>
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SWITCH BETWEEN TEST AND PRODUCTION CODE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -348,25 +347,6 @@ map <leader>vp :call VagrantProvision()<cr>
 
 function! VagrantProvision()
   exec ":!vagrant provision"
-endfunction
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Test Kitchen 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>kc :call KitchenConverge()<cr>
-map <leader>kt :call KitchenTest()<cr>
-map <leader>kv :call KitchenVerify()<cr>
-
-function! KitchenConverge()
-  exec ":!kitchen converge"
-endfunction
-
-function! KitchenTest()
-  exec ":!kitchen test"
-endfunction
-
-function! KitchenVerify()
-  exec ":!kitchen verify"
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
