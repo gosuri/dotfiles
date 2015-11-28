@@ -21,23 +21,22 @@ shopt -s no_empty_cmd_completion >/dev/null 2>&1
 # ================================================================
 # BASH COMPLETION 
 # ================================================================
-test -z "$BASH_COMPLETION" && {
-    bash=${BASH_VERSION%.*}; bmajor=${bash%.*}; bminor=${bash#*.}
-    test -n "$PS1" && test $bmajor -gt 1 && {
-        # search for a bash_completion file to source
-        for f in /usr/local/etc/bash_completion \
-                 /usr/pkg/etc/bash_completion \
-                 /opt/local/etc/bash_completion \
-                 /etc/bash_completion
-        do
-            test -f $f && {
-                . $f
-                break
-            }
-        done
-    }
-    unset bash bmajor bminor
+bash=${BASH_VERSION%.*}; bmajor=${bash%.*}; bminor=${bash#*.}
+test -n "$PS1" && test $bmajor -gt 1 && {
+  # search for a bash_completion file to source
+  for f in /usr/local/etc/bash_completion.d \
+           /usr/pkg/etc/bash_completion     \
+           /opt/local/etc/bash_completion   \
+           /etc/bash_completion
+  do
+      test -f $f && {
+          . $f
+          break
+      }
+      test -d $f && . $f/*
+  done
 }
+unset bash bmajor bminor
 
 # ================================================================
 # GIT PROMPT
@@ -104,31 +103,15 @@ if [ "$UNAME" = Darwin ]; then
         # setup the PATH and MANPATH
         PATH="$PORTS/bin:$PORTS/sbin:$PATH"
         MANPATH="$PORTS/share/man:$MANPATH"
-
-        # nice little port alias
-        alias port="sudo nice -n +18 $PORTS/bin/port"
     }
 
     test -x /usr/pkg -a ! -L /usr/pkg && {
         PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
         MANPATH="/usr/pkg/share/man:$MANPATH"
     }
-
-    # Java setup
-    JAVA_HOME="$(/usr/libexec/java_home)"
-    ANT_HOME="/Developer/Java/Ant"
-    export ANT_HOME JAVA_HOME
-
-    test -d /opt/jruby &&
-    JRUBY_HOME="/opt/jruby"
-    export JRUBY_HOME
-
-    # common alises
 fi
 
 # Use the color prompt by default when interactive
 test -n "$PS1" && prompt_color
 
 source $HOME/.dotfiles/.shellrc
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

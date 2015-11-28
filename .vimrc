@@ -409,7 +409,7 @@ au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 
 au FileType go nmap <Leader>s <Plug>(go-implements)
 au FileType go nmap <Leader>i <Plug>(go-info)
-au FileType go nmap <Leader>gr <Plug>(go-rename)
+au FileType go nmap <Leader>ge <Plug>(go-rename)
 
 augroup filetype
   au! BufRead,BufNewFile *.proto setfiletype proto
