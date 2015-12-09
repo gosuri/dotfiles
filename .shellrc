@@ -125,8 +125,6 @@ fi
 # ================================================================
 [ -f $HOME/.dotfiles/tools/gohelpers.sh ] && source $HOME/.dotfiles/tools/gohelpers.sh
 
-# set go 1.4.2 as default
-use-go14
 
 # ================================================================
 # LOAD LOCAL ENV

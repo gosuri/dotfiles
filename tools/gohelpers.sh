@@ -28,5 +28,7 @@ function use-go14() {
 # Helper function to use go 1.5
 # ================================================================
 function use-go15() {
-  brew switch go 1.5 > /dev/null 2>&1
+  export GOPATH=$CODEHOME/go
+  export PATH=$GOPATH/bin:$PATH:/usr/local/opt/go/libexec/bin
+  brew switch go 1.5.2 > /dev/null 2>&1
 }

@@ -24,6 +24,8 @@
 'g:go_highlight_trailing_whitespace_error'	vim-go.txt	/*'g:go_highlight_trailing_whitespace_error'*
 'g:go_jump_to_error'	vim-go.txt	/*'g:go_jump_to_error'*
 'g:go_loclist_height'	vim-go.txt	/*'g:go_loclist_height'*
+'g:go_metalinter_autosave'	vim-go.txt	/*'g:go_metalinter_autosave'*
+'g:go_metalinter_autosave_enabled'	vim-go.txt	/*'g:go_metalinter_autosave_enabled'*
 'g:go_metalinter_command'	vim-go.txt	/*'g:go_metalinter_command'*
 'g:go_metalinter_deadline'	vim-go.txt	/*'g:go_metalinter_deadline'*
 'g:go_metalinter_enabled'	vim-go.txt	/*'g:go_metalinter_enabled'*
