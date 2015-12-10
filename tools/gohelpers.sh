@@ -6,6 +6,10 @@
 # ================================================================
 # Helper function to recursively update package paths
 # ================================================================
+#
+# Example:
+#  go-update-import-path github.com/ovrclk/walker go.ovrclk.com/walker
+#
 function go-update-import-path() {
   usage="usage: go-update-import-path OLD_PATH NEW_PATH"
   [ $1 ] || echo $usage
