@@ -23,15 +23,13 @@
 'g:go_highlight_structs'	vim-go.txt	/*'g:go_highlight_structs'*
 'g:go_highlight_trailing_whitespace_error'	vim-go.txt	/*'g:go_highlight_trailing_whitespace_error'*
 'g:go_jump_to_error'	vim-go.txt	/*'g:go_jump_to_error'*
-'g:go_loclist_height'	vim-go.txt	/*'g:go_loclist_height'*
-'g:go_metalinter_autosave'	vim-go.txt	/*'g:go_metalinter_autosave'*
-'g:go_metalinter_autosave_enabled'	vim-go.txt	/*'g:go_metalinter_autosave_enabled'*
 'g:go_metalinter_command'	vim-go.txt	/*'g:go_metalinter_command'*
 'g:go_metalinter_deadline'	vim-go.txt	/*'g:go_metalinter_deadline'*
 'g:go_metalinter_enabled'	vim-go.txt	/*'g:go_metalinter_enabled'*
 'g:go_oracle_scope'	vim-go.txt	/*'g:go_oracle_scope'*
 'g:go_play_browser_command'	vim-go.txt	/*'g:go_play_browser_command'*
 'g:go_play_open_browser'	vim-go.txt	/*'g:go_play_open_browser'*
+'g:go_quickfix_height'	vim-go.txt	/*'g:go_quickfix_height'*
 'g:go_snippet_engine'	vim-go.txt	/*'g:go_snippet_engine'*
 'g:go_test_timeout'	vim-go.txt	/*'g:go_test_timeout'*
 'g:go_textobj_enabled'	vim-go.txt	/*'g:go_textobj_enabled'*

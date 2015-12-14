@@ -368,8 +368,11 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! GoTest() 
   let pkgname = substitute(expand("%:p:h"),getcwd(),'','')
-  exec ":!go test -parallel=4 -v ." . pkgname
+  let pkgname = substitute(pkgname,"\/src\/",'','')
+  exec ":!gb test " . pkgname
 endfunction
+" Alternative go test with gb support
+au FileType go nmap <leader>gt :call GoTest()<cr>
 
 " vim-go mappings
 au FileType go nmap <leader>r <Plug>(go-run)
@@ -389,8 +392,7 @@ au FileType go nmap <Leader>ge <Plug>(go-rename)
 
 " vim-go settings
 let g:go_fmt_command = "goimports"
-let g:go_fmt_fail_silently = 1
-
+"let g:go_fmt_fail_silently = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PROTO BUF

@@ -76,15 +76,16 @@ function! go#fmt#Format(withGoimport)
         let fmt_command  = g:go_goimports_bin
     endif
 
-    " check if the user has installed command binary.
-    " For example if it's goimports, let us check if it's installed,
+    " if it's something else than gofmt, we need to check the existing of that
+    " binary. For example if it's goimports, let us check if it's installed,
     " if not the user get's a warning via go#path#CheckBinPath()
-    let bin_path = go#path#CheckBinPath(fmt_command)
-    if empty(bin_path)
-        return
-    endif
-
     if fmt_command != "gofmt"
+        " check if the user has installed goimports
+        let bin_path = go#path#CheckBinPath(fmt_command) 
+        if empty(bin_path) 
+            return 
+        endif
+
         " change GOPATH too, so goimports can pick up the correct library
         let old_gopath = $GOPATH
         let $GOPATH = go#path#Detect()
@@ -105,6 +106,7 @@ function! go#fmt#Format(withGoimport)
         let $GOPATH = old_gopath
     endif
 
+
     "if there is no error on the temp file replace the output with the current
     "file (if this fails, we can always check the outputs first line with:
     "splitted =~ 'package \w\+')
@@ -113,21 +115,20 @@ function! go#fmt#Format(withGoimport)
         try | silent undojoin | catch | endtry
 
         " Replace current file with temp file, then reload buffer
-        let old_fileformat = &fileformat
         call rename(l:tmpname, expand('%'))
         silent edit!
-        let &fileformat = old_fileformat
         let &syntax = &syntax
 
-        " clean up previous location list, but only if it's due fmt
+        " only clear quickfix if it was previously set, this prevents closing
+        " other quickfixes
         if s:got_fmt_error 
             let s:got_fmt_error = 0
-            call go#list#Clean()
-            call go#list#Window()
+            call setqflist([])
+            call go#util#Cwindow()
         endif
     elseif g:go_fmt_fail_silently == 0 
         let splitted = split(out, '\n')
-        "otherwise get the errors and put them to location list
+        "otherwise get the errors and put them to quickfix window
         let errors = []
         for line in splitted
             let tokens = matchlist(line, '^\(.\{-}\):\(\d\+\):\(\d\+\)\s*\(.*\)')
@@ -142,13 +143,11 @@ function! go#fmt#Format(withGoimport)
             % | " Couldn't detect gofmt error format, output errors
         endif
         if !empty(errors)
-            call go#list#Populate(errors)
+            call setqflist(errors, 'r')
             echohl Error | echomsg "Gofmt returned error" | echohl None
         endif
-
         let s:got_fmt_error = 1
-        call go#list#Window(len(errors))
-
+        call go#util#Cwindow(len(errors))
         " We didn't use the temp file, so clean up
         call delete(l:tmpname)
     endif

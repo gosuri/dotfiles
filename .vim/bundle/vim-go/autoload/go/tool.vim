@@ -40,24 +40,28 @@ function! go#tool#Imports()
     return imports
 endfunction
 
-function! go#tool#ParseErrors(lines)
+function! go#tool#ShowErrors(out)
+    " cd into the current files directory. This is important so fnamemodify
+    " does create a full path for outputs when the token is only a single file
+    " name (such as for a go test output, i.e.: 'demo_test.go'). For other
+    " outputs, such as 'go install' we already get an absolute path (i.e.:
+    " '../foo/foo.go') and fnamemodify successfuly creates the full path.
+    let cd = exists('*haslocaldir') && haslocaldir() ? 'lcd ' : 'cd '
+    let current_dir = getcwd()
+    execute cd . fnameescape(expand("%:p:h"))
+
     let errors = []
 
-    for line in a:lines
+    for line in split(a:out, '\n')
         let fatalerrors = matchlist(line, '^\(fatal error:.*\)$')
         let tokens = matchlist(line, '^\s*\(.\{-}\):\(\d\+\):\s*\(.*\)')
 
         if !empty(fatalerrors)
             call add(errors, {"text": fatalerrors[1]})
         elseif !empty(tokens)
-            " strip endlines of form ^M
-            let out=substitute(tokens[3], '\r$', '', '')
-
-            call add(errors, {
-                        \ "filename" : fnamemodify(tokens[1], ':p'),
-                        \ "lnum"     : tokens[2],
-                        \ "text"     : out,
-                        \ })
+            call add(errors, {"filename" : fnamemodify(tokens[1], ':p'),
+                        \"lnum":     tokens[2],
+                        \"text":     tokens[3]})
         elseif !empty(errors)
             " Preserve indented lines.
             " This comes up especially with multi-line test output.
@@ -67,42 +71,18 @@ function! go#tool#ParseErrors(lines)
         endif
     endfor
 
-    return errors
-endfunction
+    " return back to old dir once we are finished with populating the errors
+    execute cd . fnameescape(current_dir)
 
-"FilterValids filters the given items with only items that have a valid
-"filename. Any non valid filename is filtered out.
-function! go#tool#FilterValids(items)
-    " Remove any nonvalid filename from the location list to avoid opening an
-    " empty buffer. See https://github.com/fatih/vim-go/issues/287 for
-    " details.
-    let filtered = []
-    let is_readable = {}
+    if !empty(errors)
+        call setqflist(errors, 'r')
+        return
+    endif
 
-    for item in a:items
-        if has_key(item, 'bufnr')
-            let filename = bufname(item.bufnr)
-        elseif has_key(item, 'filename')
-            let filename = item.filename
-        else
-            echohl Identifier | echon "no filename available" | echohl None
-            continue
-        endif
-
-        if !has_key(is_readable, filename)
-            let is_readable[filename] = filereadable(filename)
-        endif
-        if is_readable[filename]
-            call add(filtered, item)
-        endif
-    endfor
-
-    for k in keys(filter(is_readable, '!v:val'))
-        echo "vim-go: " | echohl Identifier | echon "[run] Dropped " | echohl Constant | echon  '"' . k . '"'
-        echohl Identifier | echon " from location list (nonvalid filename)" | echohl None
-    endfor
-
-    return filtered
+    if empty(errors)
+        " Couldn't detect error format, output errors
+        echo a:out
+    endif
 endfunction
 
 function! go#tool#ExecuteInDir(cmd) abort
