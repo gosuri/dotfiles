@@ -94,7 +94,7 @@ fi
 # INITIALIZE docker-machine shell variables
 # ================================================================
 [ "$(command -v docker-machine)" ] \
-  && [ "$(docker-machine status dev)" = "Running" ] \
+  && [ "$(docker-machine status dev 2>/dev/null)" = "Running" ] \
   && eval "$(docker-machine env dev)"
 
 # ================================================================

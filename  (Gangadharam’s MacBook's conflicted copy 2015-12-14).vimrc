@@ -138,6 +138,7 @@ set background=dark
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPS TO JUMP TO SPECIFIC COMMAND-T TARGETS AND FILES
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>gr :topleft :split config/routes.rb<cr>
 function! ShowRoutes()
   " Requires 'scratch' plugin
   :topleft 100 :split __Routes__
@@ -212,21 +213,21 @@ function! ListScripts()
   endif
 endfunction
 
+map <leader>gR :call ShowRoutes()<cr>
+map <leader>gc :call ListControllers()<cr>
+map <leader>gv :call ListViews()<cr>
+map <leader>gm :call ListModels()<cr>
+map <leader>gss :call ListStyles()<cr>
+map <leader>gsv :call ListServices()<cr>
+map <leader>gj :call ListScripts()<cr>
+
 " Rails specific
-au FileType ruby nmap <leader>gr :topleft :split config/routes.rb<cr>
-au FileType ruby map <leader>gR :call ShowRoutes()<cr>
-au FileType ruby nmap <leader>gc :call ListControllers()<cr>
-au FileType ruby nmap <leader>gv :call ListViews()<cr>
-au FileType ruby nmap <leader>gm :call ListModels()<cr>
-au FileType ruby nmap <leader>gss :call ListStyles()<cr>
-au FileType ruby nmap <leader>gsv :call ListServices()<cr>
-au FileType ruby nmap <leader>gj :call ListScripts()<cr>
-au FileType ruby nmap <leader>gh :CtrlPClearAllCaches<cr>\|:CtrlP app/helpers<cr>
-au FileType ruby nmap <leader>gl :CtrlPClearAllCaches<cr>\|:CtrlP lib<cr>
-au FileType ruby nmap <leader>gf :CtrlPClearAllCaches<cr>\|:CtrlP spec/features<cr>
-au FileType ruby nmap <leader>gg :topleft 100 :split Gemfile<cr>
-au FileType ruby nmap <leader>f :CtrlPClearAllCaches<cr>\|:CtrlP<cr>
-au FileType ruby nmap <leader>F :CtrlPClearAllCaches<cr>\|:CtrlP %%<cr>
+map <leader>gh :CtrlPClearAllCaches<cr>\|:CtrlP app/helpers<cr>
+map <leader>gl :CtrlPClearAllCaches<cr>\|:CtrlP lib<cr>
+map <leader>gf :CtrlPClearAllCaches<cr>\|:CtrlP spec/features<cr>
+map <leader>gg :topleft 100 :split Gemfile<cr>
+map <leader>f :CtrlPClearAllCaches<cr>\|:CtrlP<cr>
+map <leader>F :CtrlPClearAllCaches<cr>\|:CtrlP %%<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SWITCH BETWEEN TEST AND PRODUCTION CODE
@@ -368,15 +369,15 @@ endfunction
 function! GoTest() 
   let pkgname = substitute(expand("%:p:h"),getcwd(),'','')
   let pkgname = substitute(pkgname,"\/src\/",'','')
-  exec ":!gb test -v " . pkgname
+  exec ":!gb test " . pkgname
 endfunction
 " Alternative go test with gb support
-au FileType go nmap <leader>t :call GoTest()<cr>
+au FileType go nmap <leader>gt :call GoTest()<cr>
 
 " vim-go mappings
 au FileType go nmap <leader>r <Plug>(go-run)
-"au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>gt <Plug>(go-test)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 
 au FileType go nmap <Leader>ds <Plug>(go-def-split)
@@ -416,8 +417,6 @@ cmap w!! %!sudo tee > /dev/null %
 if exists("g:ctrl_user_command")
   unlet g:ctrlp_user_command
 endif
-set wildignore+=Godeps,*.a,vendor
-
-nmap <Leader>b :CtrlPBuffer<cr>
+set wildignore+=Godeps
 
 au BufRead,BufNewFile *.bats setfiletype sh
