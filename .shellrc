@@ -91,13 +91,6 @@ if [[ -n "$INTERACTIVE" && -n "$LOGIN" ]]; then
 fi
 
 # ================================================================
-# INITIALIZE docker-machine shell variables
-# ================================================================
-[ "$(command -v docker-machine)" ] \
-  && [ "$(docker-machine status docker-dev 2>/dev/null)" = "Running" ] \
-  && eval "$(docker-machine env docker-dev)"
-
-# ================================================================
 # HELPER function for chef sdk
 # ================================================================
 function chef-init() {

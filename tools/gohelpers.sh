@@ -36,3 +36,7 @@ function use-go15() {
   export PATH=$GOPATH/bin:$PATH:/usr/local/opt/go/libexec/bin
   brew switch go 1.5.2 > /dev/null 2>&1
 }
+
+function flush-dns {
+  sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder
+}
