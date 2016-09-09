@@ -72,3 +72,5 @@ ends=$(date +%s)
 [ "${DF_DEBUG}" == "1" ] && echo "${HOME}/.zshrc load elapsed $(($ends - $starts))s"
 
 unalias gb
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

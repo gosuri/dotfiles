@@ -115,3 +115,5 @@ fi
 test -n "$PS1" && prompt_color
 
 source $HOME/.dotfiles/.shellrc
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
