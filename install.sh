@@ -1,142 +1,142 @@
-#!/usr/bin/env /bin/bash
-#
-# Copyright 2013 Greg Osuri <gosuri@gmail.com>
-#
-# Permission is hereby granted, free of charge, to any person obtaining
-# a copy of this software and associated documentation files (the
-# 'Software'), to deal in the Software without restriction, including
-# without limitation the rights to use, copy, modify, merge, publish,
-# distribute, sublicense, and/or sell copies of the Software, and to
-# permit persons to whom the Software is furnished to do so, subject to
-# the following conditions:
-#
-# The above copyright notice and this permission notice shall be
-# included in all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#!/usr/bin/env bash
 
+PROGRAM=dotfiles
+
+# defaults
 DOTFILES=$HOME/.dotfiles
-GIT_CONF_TMPL=$DOTFILES/templates/gitconfig.template
-BASH_COMPLETION=.bash_completion
-BASH_PROFILE=.bash_profile
-BASHRC=.bashrc
-GITCONFIG=.gitconfig
-TMUX_CONF=.tmux.conf
-VIMRC=.vimrc
-VIM=.vim
-ZSHRC=.zshrc
+GITCONFIG=$HOME/.gitconfig
 
-# .gitconfig
+# colors
+normal=$(tput sgr0)
+reset=$(tput sgr0)
+red=$(tput setaf 1)
+bold=$(tput bold)
 
-bold=`tput bold`
-normal=`tput sgr0`
+set -o nounset 
+set -o errexit 
+set -o pipefail
 
-_log() {
-  echo "==> $1"
-}
+function run() {
+  local should_install_zsh=0
+  abort_if_missing_command "git" "git is required"
 
-function _setGitAttr() {
-	printf "$1: "
-	read -r val
-	if [ -n "$val" ]; then
-		cmd="git config --global --replace-all $2 '$val'"
-		_log "exec: $cmd"
-		eval "$cmd"
-		_log "gitconfig: $2 is $(git config $2)"
-    
-    # 3rd attribute
-		if [ -n "$3" ]; then
-			cmd="git config --global $3 $val"
-			_log "exec: $cmd"
-			eval "$cmd"
-		fi
-	else
-		_log "skipping $2 $3"
-	fi
-}
+  # abort if the dotfiles directory is missing
+  [[ -d $DOTFILES ]] || abort "${DOTFILES} is missing"
 
-function install_gitconfig() {
-  _log "${bold}Setting .gitconfig${normal}"
-  echo 
-  cp $GIT_CONF_TMPL $HOME/.gitconfig
-  _setGitAttr "Your name" "user.name"
-  echo 
-  _setGitAttr "Your email" "user.email" "sendmail.smtpuser"
-  echo 
-  _setGitAttr "Your github username" "github.username"
-}
+  # abort if 
 
-function install_zsh() {
-  if ! [ -n "$(command -v zsh)" ]
-  then
-    _log "ZSH is not found. Installing ZSH"
-    sudo apt-get install zsh
+  if [[ "$(uname)" == "Darwin" ]]; then
+    abort_if_missing_command "git" "git is required"
   fi
-  chsh -s /bin/zsh
+
+  info "Installing dotfiles from ${DOTFILES}"
+  echo
+
+  # configure git
+  config_git
+
+  config_shell
+
+  install_omzsh
+}
+
+function config_shell() {
+  # Ask user to for zsh
+  case $SHELL in 
+    *bash)
+      read -e -p "    ${bold}Would you like to use zsh?${reset}: " should_install_zsh
+      if [[ "${should_install_zsh}" == "Y" ]]; then
+        # install ZSH
+        config_shell
+      else
+        curl -L http://install.ohmyz.sh | sh
+        log "skipping zsh"
+      fi
+      ;;
+    *zsh)
+      ;;
+  esac
+}
+
+# set_git_attr "Question" "attribute"
+# Sets the git config attributes based on user's response
+function set_git_attr() {
+  local query="$1"
+  local val=''
+  local attr="$2"
+  read -e -p "    ${bold}${query}${reset}: " val
+  if [ "${val}" ]; then
+    git config --global --replace-all ${attr} "${val}"
+  else
+    log "[skip] ${attr} not configured"
+  fi
+}
+
+function config_git() {
+  notice "Configuring git under ${GITCONFIG}"
+  cp ${DOTFILES}/files/gitconfig $GITCONFIG
+  set_git_attr "Your name" "user.name"
+  set_git_attr "Your email" "user.email" "sendmail.smtpuser"
+  set_git_attr "Your github username" "github.username"
+
+  # enable git credentials helper on mac
+  if [[ "$(uname)" == "Darwin" ]]; then
+    local path="$(dirname $(which git))/git-credential-osxkeychain"
+    if [[ -f ${path} ]]; then
+      git config --global credential.helper osxkeychain
+    else
+      read -e -p "    ${bold}Would you like to install git-credential-osxkeychain plugin?(Y/n): ${reset}" install_git_cred
+      if [[ "${install_git_cred}" == "Y" ]]; then
+        curl -sLo "${path}" https://github-media-downloads.s3.amazonaws.com/osx/git-credential-osxkeychain
+        chmod +x ${path}
+        git config --global credential.helper osxkeychain
+      fi
+    fi
+  fi
 }
 
 function install_omzsh() {
   if test -d $HOME/.oh-my-zsh
   then
-    _log "skipping .oh-my-zsh. $HOME/.oh-my-zsh exists"
+    log "skipping .oh-my-zsh. $HOME/.oh-my-zsh exists"
   else
-    _log "installing oh-my-zsh"
+    log "installing oh-my-zsh"
     git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
   fi
 
   if test -f $HOME/.oh-my-zsh/themes/sorin-custom.zsh-theme
   then
-    _log "skipping: sorin-custom.zsh-theme exists"
+    log "skipping: sorin-custom.zsh-theme exists"
   else
-    _log "linking sorin-custom zsh theme"
+    log "linking sorin-custom zsh theme"
     ln -s $DOTFILES/themes/sorin-custom.zsh-theme $HOME/.oh-my-zsh/themes/sorin-custom.zsh-theme
   fi
-  _log "finished: oh-my-zsh"
+  log "finished: oh-my-zsh"
 }
 
-function makeLink() {
-  TIMESTAMP=$(date "+%s")
-  SOURCE=$DOTFILES/$1
-  TARGET=$HOME/$1
-
-  # backup if the file exist
-  if test -f $TARGET || test -d $TARGET
-  then
-    echo "--> detected existing $TARGET"
-    mv $TARGET $TARGET-$TIMESTAMP
-    echo "--> backed up $TARGET to $TARGET-$TIMESTAMP"
-  fi
-
-  ln -nsf $SOURCE $TARGET
-  echo "--> linked $SOURCE to $TARGET"
+function abort_if_missing_command() {
+  local cmd=$1
+  type ${cmd} >/dev/null 2>&1 || abort "${2}"
 }
 
-function makeAllLinks() {
-  echo "--> linking"
-  makeLink $BASH_COMPLETION
-  makeLink $BASH_PROFILE
-  makeLink $BASHRC
-  makeLink $TMUX_CONF
-  makeLink $VIMRC
-  makeLink $VIM
-  makeLink $ZSHRC
-  echo "--> finished linking"
+function abort() {
+  local red=$(tput setaf 1)
+  local reset=$(tput sgr0)
+  local msg="${red}==> FATAL: $@${reset}"
+  echo >&2 -e "${msg}"
+  exit 1
 }
 
-function main() {
-  echo "--> installing dotfiles to $DOTFILES"
-  pushd $DOTFILES > /dev/null &2>1
-  install_gitconfig
-  install_omzsh
-  makeAllLinks
-  popd > /dev/null
-  echo "--> finished installing .dotfiles"
+function info() {
+  echo -e "${bold}==> ${*}${reset}"
 }
 
-main
+function notice() {
+  echo -e "${bold}    ${*}${reset}"
+}
+
+function log() {
+  echo -e "    ${*}"
+}
+
+run

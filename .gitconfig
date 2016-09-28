@@ -1,0 +1,91 @@
+# vim: noexpandtab ts=4 sw=4 sts=0
+
+[alias]
+  ci           = commit
+  co           = checkout
+  st           = status
+  s            = status -sb -uno --ignore-submodules=untracked
+  di           = diff
+  dc           = diff --cached
+  amend        = commit --amend
+  pod          = push origin develop
+  pom          = push origin master
+  b            = branch
+
+  ll           = log --pretty=oneline --abbrev-commit --max-count=15
+  wip          = !git add -u && git commit -m ...
+  wipc         = !date >> WIP && git add WIP && git commit -m ...
+  fp           = format-patch --stdout
+  x            = checkout HEAD
+  bv           = !git branch --color -v | cut -c1-100
+  incoming     = !git-incoming
+  in           = !git-incoming
+  outgoing     = !git-outgoing
+  out          = !git-outgoing
+  sa           = status -sb --ignore-submodules=untracked
+  rb           = rebase HEAD~2 -i
+
+  lol          = log --graph --decorate --pretty=oneline --abbrev-commit
+  lola         = log --graph --decorate --pretty=oneline --abbrev-commit --all
+
+[core]
+  filemode          = true
+  logallrefupdates  = true
+  whitespace        = space-before-tab, trailing-space
+
+[help]
+  browser = open
+
+[branch]
+  autosetupmerge = true
+
+[diff]
+  renames        = copies
+  mnemonicprefix = true
+
+[push]
+  default = current
+
+[sendemail]
+  smtpserver      = smtp.gmail.com
+  smtpserverport  = 587
+  smtpencryption  = tls
+
+[color]
+  ui = auto
+
+[color "diff"]
+  meta  = blue bold
+  frag  = magenta bold
+  old   = red bold
+  new   = green bold
+
+[color "branch"]
+  current = yellow reverse
+  local   = yellow bold
+  remote  = green bold
+  plain   = red bold
+
+[color "status"]
+  added     = yellow
+  changed   = green bold
+  untracked = blue bold
+
+[hub]
+  http-clone = true
+
+[browser "gitscm"]
+  cmd = sh -c 'open http://git-scm.com/docs/$(basename $1 .html)' --
+
+[merge]
+	tool = vimdiff
+
+[user]
+	name = Greg Osuri
+	email = gosuri@gmail.com
+	
+[sendmail]
+	smtpuser = gosuri@gmail.com
+
+[github]
+	username = gosuri
