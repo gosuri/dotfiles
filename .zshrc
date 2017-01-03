@@ -67,3 +67,9 @@ bindkey '^R' history-incremental-pattern-search-backward
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '\C-x\C-e' edit-command-line
+
+# ================================================================
+# ZSH Completions
+# ================================================================
+autoload -U compinit && compinit
+fpath=(/usr/local/share/zsh-completions $fpath)
