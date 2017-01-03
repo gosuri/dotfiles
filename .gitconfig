@@ -89,3 +89,5 @@
 
 [github]
 	username = gosuri
+[credential]
+	helper = osxkeychain
