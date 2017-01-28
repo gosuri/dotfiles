@@ -78,6 +78,11 @@ function current_branch() {
   echo ${ref#refs/heads/}
 }
 
+# for backward compatibility
+function git_current_branch() {
+  current_branch
+}
+
 # The list of remotes
 function current_repository() {
   if ! $_omz_git_git_cmd rev-parse --is-inside-work-tree &> /dev/null; then
