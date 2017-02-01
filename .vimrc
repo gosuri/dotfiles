@@ -372,12 +372,12 @@ function! GoTest()
 endfunction
 
 " " Alternative go test with gb support
-" au FileType go nmap <leader>t :call GoTest()<cr>
+au FileType go nmap <leader>t :call GoTest()<cr>
 
 " " vim-go mappings
 " au FileType go nmap <leader>r <Plug>(go-run)
 " "au FileType go nmap <leader>b <Plug>(go-build)
-" au FileType go nmap <leader>gt <Plug>(go-test)
+au FileType go nmap <leader>gt <Plug>(go-test)
 " au FileType go nmap <leader>c <Plug>(go-coverage)
 
 " au FileType go nmap <Leader>ds <Plug>(go-def-split)
