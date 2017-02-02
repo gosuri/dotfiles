@@ -378,6 +378,7 @@ au FileType go nmap <leader>t :call GoTest()<cr>
 " au FileType go nmap <leader>r <Plug>(go-run)
 " "au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>gt <Plug>(go-test)
+au FileType go nmap <Leader>ge <Plug>(go-rename)
 " au FileType go nmap <leader>c <Plug>(go-coverage)
 
 " au FileType go nmap <Leader>ds <Plug>(go-def-split)
@@ -388,7 +389,6 @@ au FileType go nmap <leader>gt <Plug>(go-test)
 " au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 " au FileType go nmap <Leader>s <Plug>(go-implements)
 " au FileType go nmap <Leader>i <Plug>(go-info)
-" au FileType go nmap <Leader>ge <Plug>(go-rename)
 
 " " vim-go settings
 " let g:go_fmt_command = "goimports"
