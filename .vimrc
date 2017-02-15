@@ -450,3 +450,47 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" DEIN CONFIG
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if &compatible
+  set nocompatible               
+endif
+
+let s:deindir   = expand('~/.vim/dein')
+let s:bundledir = expand('~/.nvim/bundle')
+let &runtimepath = &runtimepath . ',' . s:deindir . '/dein.vim'
+
+" Required:
+if dein#load_state(s:bundledir)
+  call dein#begin(s:bundledir)
+  " Let dein manage dein
+  " Required:
+  " call dein#add('$HOME/.dotfiles/.vim/dein/repos/github.com/Shougo/dein.vim')
+
+  " Add or remove your plugins here:
+  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet-snippets')
+  " You can specify revision/branch/tag.
+  call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+
+  " DEO COMPLETE
+  if has('nvim')
+    call dein#add('Shougo/deoplete.nvim')
+    " call dein#add('zchee/deoplete-go', {'build': 'make'})
+  end
+  " Required:
+  call dein#end()
+  call dein#save_state()
+endif
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+" install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
