@@ -11,6 +11,10 @@ set cpo-=C
 CompilerSet makeprg=bundle
 
 CompilerSet errorformat=
+      \%+EGem::InstallError:%.%#,
+      \%+ECould\ not\ find\ gem\ '%.%#,
+      \%+EBundler\ could\ not\ find\ compatible\ versions\ for\ gem\ \"%.%#,
+      \%+Eextconf\ failed%.%#,
       \%+E%f:%l:\ parse\ error,
       \%W%f:%l:\ warning:\ %m,
       \%E%f:%l:in\ %*[^:]:\ %m,
@@ -19,6 +23,8 @@ CompilerSet errorformat=
       \%-Z%\tfrom\ %f:%l,
       \%-Z%p^,
       \%-G%.%#
+
+" -complete=customlist,bundler#complete
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
