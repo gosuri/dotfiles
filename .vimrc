@@ -44,6 +44,7 @@ if dein#load_state(s:bundledir)
   call dein#add('vim-airline/vim-airline')
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('tpope/vim-commentary')
 
   " Required:
   call dein#end()
@@ -116,6 +117,9 @@ set wildmenu
 set modelines=5
 
 let mapleader=","
+
+" Exit on jk
+imap jk <Esc>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM AUTOCMDS
@@ -431,6 +435,7 @@ endfunction
 " " Alternative go test with gb support
 au FileType go nmap <leader>t :call GoTest()<cr>
 
+au FileType go nmap <leader>gg :GoTestCompile<cr>
 " " vim-go mappings
 " au FileType go nmap <leader>r <Plug>(go-run)
 " "au FileType go nmap <leader>b <Plug>(go-build)
@@ -448,7 +453,7 @@ au FileType go nmap <Leader>ge <Plug>(go-rename)
 " au FileType go nmap <Leader>i <Plug>(go-info)
 
 " " vim-go settings
-" let g:go_fmt_command = "goimports"
+let g:go_fmt_command = "goimports"
 " "let g:go_fmt_fail_silently = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -507,5 +512,8 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+let g:deoplete#enable_at_startup = 1
+
 
 
