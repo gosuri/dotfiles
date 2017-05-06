@@ -91,3 +91,5 @@
 	username = gosuri
 [credential]
 	helper = osxkeychain
+[http]
+	postBuffer = 157286400
