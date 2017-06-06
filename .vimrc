@@ -1,6 +1,6 @@
 " vim:set ts=2 sts=2 sw=2 expandtab:
-call pathogen#infect()
-call pathogen#helptags()
+" call pathogen#infect()
+" call pathogen#helptags()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " DEIN CONFIG
@@ -340,11 +340,11 @@ nnoremap <leader>. :call OpenTestAlternate()<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " RUNNING TESTS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>t :call RunTestFile()<cr>
-map <leader>T :call RunNearestTest()<cr>
-map <leader>a :call RunTests('')<cr>
-map <leader>c :w\|:!script/features<cr>
-map <leader>w :w\|:!script/features --profile wip<cr>
+" map <leader>t :call RunTestFile()<cr>
+" map <leader>T :call RunNearestTest()<cr>
+" map <leader>a :call RunTests('')<cr>
+" map <leader>c :w\|:!script/features<cr>
+" map <leader>w :w\|:!script/features --profile wip<cr>
 
 function! RunTestFile(...)
     if a:0
@@ -401,60 +401,47 @@ endfunction
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MISC
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>vp :call VagrantProvision()<cr>
-
-function! VagrantProvision()
-  exec ":!vagrant provision"
-endfunction
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Terraform
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>tp :call TerraformPlan()<cr>
-map <leader>ta :call TerraformApply()<cr>
-
-function! TerraformPlan() 
-  exec ":!terraform get && terraform plan -module-depth=1 -input=false"
-endfunction
-
-function! TerraformApply() 
-  exec ":!terraform get && terraform apply -input=false"
-endfunction
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " GO
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! GoTest() 
-  let pkgname = substitute(expand("%:p:h"),getcwd(),'','')
+function! GoAltTest() 
+  let pkgname = substitute(expand("%:p:h"),$GOPATH,'','')
   let pkgname = substitute(pkgname,"\/src\/",'','')
-  exec ":!gb test -v " . pkgname
+  exec ":!go test -v " . pkgname
 endfunction
 
-" " Alternative go test with gb support
-au FileType go nmap <leader>t :GoTest<cr>
+" vim-go settings
+" If using neovim `:GoTest` will run in a new terminal or run asynchronously
+" in the background according to |'g:go_term_enabled'|. You can set the mode
+" of the new terminal with |'g:go_term_mode'|.
+"
+if has('nvim')
+  "let g:go_term_enabled = 1
+  let g:go_term_mode = "split"
+  let g:go_term_height = 10
+  let g:go_term_width = 30
+end
 
-au FileType go nmap <leader>gg :GoTestCompile<cr>
-" " vim-go mappings
-" au FileType go nmap <leader>r <Plug>(go-run)
-" "au FileType go nmap <leader>b <Plug>(go-build)
-" au FileType go nmap <leader>gt <Plug>(go-test)
-au FileType go nmap <Leader>ge <Plug>(go-rename)
-" au FileType go nmap <leader>c <Plug>(go-coverage)
-
-" au FileType go nmap <Leader>ds <Plug>(go-def-split)
-" au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
-" au FileType go nmap <Leader>dt <Plug>(go-def-tab)
-" au FileType go nmap <Leader>gd <Plug>(go-doc)
-" au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-" au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
-" au FileType go nmap <Leader>s <Plug>(go-implements)
-" au FileType go nmap <Leader>i <Plug>(go-info)
-
-" " vim-go settings
 let g:go_fmt_command = "goimports"
-" "let g:go_fmt_fail_silently = 1
+let g:go_test_timeout= '30s'
+
+" call go alternative test
+au FileType go nmap <leader>gt :call GoAltTest()<cr>
+
+" vim-go mappings
+au FileType go nmap <leader>gg :GoTestCompile<cr>
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <Leader>ge <Plug>(go-rename)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+au FileType go nmap <Leader>s <Plug>(go-implements)
+au FileType go nmap <Leader>i <Plug>(go-info)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PROTO BUF
