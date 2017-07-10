@@ -550,11 +550,11 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>-1590 627 620 392 -2560 -155 2560 1417 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>-1935 221 796 473 -2560 -155 2560 1417 </string>
+	<string>625 420 770 429 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-2560 760 650 502 -2560 -155 2560 1417 </string>
+	<string>0 0 2560 1440 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>-2560 760 650 502 -2560 -155 2560 1417 </string>
+	<string>2560 -96 2560 1440 2560 -96 2560 1417 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -2771,12 +2771,14 @@
 			<string>/Users/gosuri</string>
 		</dict>
 	</array>
+	<key>NoSyncCommandHistoryHasEverBeenUsed</key>
+	<true/>
 	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>9F357037-D158-4A76-9A1D-2CC1CCA1BD80</string>
 	<key>NoSyncLastTipTime</key>
-	<real>514840101.09667802</real>
+	<real>517965072.34732401</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -2837,6 +2839,23 @@
 		<string>0046</string>
 		<string>0047</string>
 		<string>0048</string>
+		<string>0049</string>
+		<string>0050</string>
+		<string>0051</string>
+		<string>0052</string>
+		<string>0053</string>
+		<string>0054</string>
+		<string>0055</string>
+		<string>0056</string>
+		<string>0057</string>
+		<string>0058</string>
+		<string>0059</string>
+		<string>0060</string>
+		<string>0061</string>
+		<string>0062</string>
+		<string>0063</string>
+		<string>0064</string>
+		<string>0065</string>
 	</array>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
@@ -2910,7 +2929,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-04-25T23:46:51Z</date>
+	<date>2017-06-06T21:26:07Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -2925,10 +2944,14 @@
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
 	<real>0.40000000596046448</real>
+	<key>StretchTabsToFillBar</key>
+	<false/>
 	<key>SwitchTabModifier</key>
 	<integer>4</integer>
 	<key>SwitchWindowModifier</key>
 	<integer>6</integer>
+	<key>TabStyle</key>
+	<integer>3</integer>
 	<key>TabViewType</key>
 	<integer>0</integer>
 	<key>ThreeFingerEmulates</key>
@@ -2962,6 +2985,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.1.beta.3</string>
+	<string>3.1.beta.4</string>
 </dict>
 </plist>

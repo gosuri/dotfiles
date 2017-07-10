@@ -21,6 +21,7 @@ if dein#load_state(s:bundledir)
   call dein#add('tpope/vim-dispatch')       " vim-dispatch: asynchronous build and test dispatcher 
   call dein#add('tpope/vim-fugitive.git')   " vim-fugitive: git wapper
   call dein#add('scrooloose/nerdcommenter') " nerdcommenter: commenting plugin
+  call dein#add('SirVer/ultisnips')
   if has('nvim')
     call dein#add('Shougo/deoplete.nvim')
   end
