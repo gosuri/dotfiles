@@ -2,3 +2,4 @@
 .DS_Store
 .env
 .vim/init.vim
+.vim/.cache

@@ -22,7 +22,7 @@ on ubuntu/debian: `sudo apt-get install git`
 
 git comes packages on OSX, if not you can install with homebrew: `brew install git`
 
-### zsh (optional)
+### zsh 
 
 on ubuntu/debian: `sudo apt-get install zsh`
 
@@ -36,4 +36,13 @@ $ chsh -s /bin/zsh
 
 ### vim (~>v8.0) with lua
 
-using brew for macos: `brew install vim --with-lua`
+Using brew for macos: `brew install vim --with-lua`
+
+### Dien
+
+Install using:
+
+```sh
+$ curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+$ sh ./installer.sh ~/.vim/.cache/dein
+```

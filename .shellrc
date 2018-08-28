@@ -42,3 +42,8 @@ fi
 # LOAD LOCAL ENV
 # ================================================================
 [ -f $HOME/.env ] && source $HOME/.env
+
+# ================================================================
+# LOAD LOCAL HELPES
+# ================================================================
+[ -f $HOME/.dotfiles/tools/helpers.sh ] && source $HOME/.dotfiles/tools/helpers.sh

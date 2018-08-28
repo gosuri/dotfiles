@@ -82,14 +82,17 @@
 
 [user]
 	name = Greg Osuri
-	email = gosuri@gmail.com
+	email = me@gregosuri.com
+	signingkey = 688B0D3791621BF3
 	
 [sendmail]
-	smtpuser = gosuri@gmail.com
+	smtpuser = me@gregosuri.com
 
 [github]
 	username = gosuri
-[credential]
-	helper = osxkeychain
+
 [http]
 	postBuffer = 157286400
+
+[credential]
+	helper = osxkeychain

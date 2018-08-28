@@ -7,9 +7,9 @@ source $HOME/.shellrc
 autoload -U colors && colors
 
 # Left prompt
-export PROMPT="[%{$fg[cyan]%}%m%{$fg[blue]%}:%1d%{$reset_color%}] "
+export PROMPT="%{$fg[magenta]%}(%{$reset_color%}%1d%{$fg[magenta]%}) %{$reset_color%}$ "
 
-# Righ prompt with git info
+# Right prompt with git info
 setopt prompt_subst
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' actionformats \
@@ -314,5 +314,3 @@ alias glum='git pull upstream master'
 alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
 alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify -m "--wip-- [skip ci]"'
 
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

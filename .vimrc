@@ -1,6 +1,4 @@
 " vim:set ts=2 sts=2 sw=2 expandtab:
-" call pathogen#infect()
-" call pathogen#helptags()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " DEIN CONFIG
@@ -9,13 +7,13 @@ if &compatible
   set nocompatible               
 endif
 
-let s:deindir   = expand('~/.vim/dein')
-let s:bundledir = expand('~/.nvim/bundle')
-let &runtimepath = &runtimepath . ',' . s:deindir . '/dein.vim'
+" Add the dein installation directory into runtimepath
+set runtimepath+=~/.vim/.cache/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state(s:bundledir)
-  call dein#begin(s:bundledir)
+if dein#load_state('~/.vim/.cache/dein')
+  call dein#begin('~/.vim/.cache/dein')
+  call dein#add('~/.vim/.cache/dein')
 
   call dein#add('ctrlpvim/ctrlp.vim')       " ctrlp: file browser
   call dein#add('tpope/vim-dispatch')       " vim-dispatch: asynchronous build and test dispatcher 
@@ -52,7 +50,6 @@ if dein#load_state(s:bundledir)
   call dein#save_state()
 endif
 
-" Required:
 filetype plugin indent on
 syntax enable
 
@@ -122,6 +119,8 @@ let mapleader=","
 " Exit on jk
 imap jk <Esc>
 
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM AUTOCMDS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -166,11 +165,6 @@ map <Up> <Nop>
 map <Down> <Nop>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" REFRESH CTAGS FROM BUNDLER GEM PATH
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <Leader>rft :!ctags -e --exclude=.git --exclude='*.log *.js *.css *.sass' -R * `bundle show --paths` <CR><CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OPEN FILES IN DIRECTORY OF CURRENT FILE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
@@ -197,252 +191,6 @@ map <leader>n :call RenameFile()<cr>
 set t_Co=256 " 256 colors
 set background=dark
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MAPS TO JUMP TO SPECIFIC COMMAND-T TARGETS AND FILES
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! ShowRoutes()
-  " Requires 'scratch' plugin
-  :topleft 100 :split __Routes__
-  " Make sure Vim doesn't write __Routes__ as a file
-  :set buftype=nofile
-  " Delete everything
-  :normal 1GdG
-  " Put routes output in buffer
-  :0r! bundle exec rake -s routes
-  " Size window to number of lines (1 plus rake output length)
-  :exec ":normal " . line("$") . _ "
-  " Move cursor to bottom
-  :normal 1GG
-  " Delete empty trailing line
-  :normal dd
-endfunction
-
-function! ListControllers()
-  :CtrlPClearAllCaches
-  if isdirectory("app/scripts/controllers")
-    :CtrlP app/scripts/controllers
-  else
-    :CtrlP app/controllers
-  endif
-endfunction
-
-function! ListServices()
-  :CtrlPClearAllCaches
-  if isdirectory("app/scripts/services")
-    :CtrlP app/scripts/services
-  elseif isdirectory("app/services")
-    :CtrlP app/services
-  else
-    :CtrlP app/lib/services
-  endif
-endfunction
-
-function! ListViews()
-  :CtrlPClearAllCaches
-  :CtrlP app/views
-endfunction
-
-function! ListModels()
-  :CtrlPClearAllCaches
-  if isdirectory("app/scripts/models")
-    :CtrlP app/scripts/models
-  else
-    :CtrlP app/models
-  endif
-endfunction
-
-function! ListStyles()
-  :CtrlPClearAllCaches
-  if isdirectory("app/styles")
-    :CtrlP app/styles
-  else
-    :CtrlP app/assets/stylesheets
-  endif
-endfunction
-
-function! ListDirectives()
-  :CtrlPClearAllCaches
-  :CtrlP app/scripts/directives
-endfunction
-
-function! ListScripts()
-  :CtrlPClearAllCaches
-  if isdirectory("app/scripts")
-    :CtrlP app/scripts
-  else
-    :CtrlP app/assets/javascripts
-  endif
-endfunction
-
-" Rails specific
-au FileType ruby nmap <leader>gr :topleft :split config/routes.rb<cr>
-au FileType ruby map <leader>gR :call ShowRoutes()<cr>
-au FileType ruby nmap <leader>gc :call ListControllers()<cr>
-au FileType ruby nmap <leader>gv :call ListViews()<cr>
-au FileType ruby nmap <leader>gm :call ListModels()<cr>
-au FileType ruby nmap <leader>gss :call ListStyles()<cr>
-au FileType ruby nmap <leader>gsv :call ListServices()<cr>
-au FileType ruby nmap <leader>gj :call ListScripts()<cr>
-au FileType ruby nmap <leader>gh :CtrlPClearAllCaches<cr>\|:CtrlP app/helpers<cr>
-au FileType ruby nmap <leader>gl :CtrlPClearAllCaches<cr>\|:CtrlP lib<cr>
-au FileType ruby nmap <leader>gf :CtrlPClearAllCaches<cr>\|:CtrlP spec/features<cr>
-au FileType ruby nmap <leader>gg :topleft 100 :split Gemfile<cr>
-au FileType ruby nmap <leader>f :CtrlPClearAllCaches<cr>\|:CtrlP<cr>
-au FileType ruby nmap <leader>F :CtrlPClearAllCaches<cr>\|:CtrlP %%<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SWITCH BETWEEN TEST AND PRODUCTION CODE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! OpenTestAlternate()
-  if &filetype == "go"
-    exec ':e ' .  AlternateForCurrentFile_go()
-  elseif &filetype == "ruby"
-    exec ':e ' . AlternateForCurrentFile()
-  endif
-endfunction
-
-" switches between <current_file>.go and <current_file>_test.go
-function! AlternateForCurrentFile_go()
-  let current_file = expand("%")
-  let new_file = current_file
-  " check if the current file is a test file
-  let in_test = match(current_file, '_test.go') != -1
-  if in_test
-    return substitute(new_file, '_test\.go$', '.go', '')
-  else
-    return substitute(new_file, '\.go$', '_test.go', '')
-  endif
-endfunction
-
-function! AlternateForCurrentFile()
-  let current_file = expand("%")
-  let new_file = current_file
-  let in_spec = match(current_file, '^spec/') != -1
-  let going_to_spec = !in_spec
-  let in_app = match(current_file, '\<controllers\>') != -1 || match(current_file, '\<models\>') != -1 || match(current_file, '\<views\>') != -1 || match(current_file, '\<helpers\>') != -1 ||  match(current_file, '\<workers\>')
-  if going_to_spec
-    if in_app
-      let new_file = substitute(new_file, '^app/', '', '')
-    end
-    let new_file = substitute(new_file, '\.rb$', '_spec.rb', '')
-    let new_file = 'spec/' . new_file
-  else
-    let new_file = substitute(new_file, '_spec\.rb$', '.rb', '')
-    let new_file = substitute(new_file, '^spec/', '', '')
-    if in_app
-      let new_file = 'app/' . new_file
-    end
-  endif
-  return new_file
-endfunction
-
-nnoremap <leader>. :call OpenTestAlternate()<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RUNNING TESTS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" map <leader>t :call RunTestFile()<cr>
-" map <leader>T :call RunNearestTest()<cr>
-" map <leader>a :call RunTests('')<cr>
-" map <leader>c :w\|:!script/features<cr>
-" map <leader>w :w\|:!script/features --profile wip<cr>
-
-function! RunTestFile(...)
-    if a:0
-        let command_suffix = a:1
-    else
-        let command_suffix = ""
-    endif
-
-    " Run the tests for the previously-marked file.
-    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\)$') != -1
-    if in_test_file
-        call SetTestFile()
-    elseif !exists("t:grb_test_file")
-        return
-    end
-    call RunTests(t:grb_test_file . command_suffix)
-endfunction
-
-function! RunNearestTest()
-    let spec_line_number = line('.')
-    call RunTestFile(":" . spec_line_number . " -b")
-endfunction
-
-function! SetTestFile()
-    " Set the spec file that tests will be run for.
-    let t:grb_test_file=@%
-endfunction
-
-function! RunTests(filename)
-    " Write the file and run tests for the given filename
-    :w
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    if match(a:filename, '\.feature$') != -1
-        exec ":!script/features " . a:filename
-    else
-        if filereadable("script/test")
-            exec ":!script/test " . a:filename
-        elseif filereadable("Gemfile")
-          if filereadable("bin/spring")
-            exec ":!bin/spring rspec --color " . a:filename
-          else
-            exec ":!bundle exec rspec --color " . a:filename
-          end
-        else
-            exec ":!rspec --color " . a:filename
-        end
-    end
-endfunction
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" GO
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! GoAltTest() 
-  let pkgname = substitute(expand("%:p:h"),$GOPATH,'','')
-  let pkgname = substitute(pkgname,"\/src\/",'','')
-  exec ":!go test -v " . pkgname
-endfunction
-
-" vim-go settings
-" If using neovim `:GoTest` will run in a new terminal or run asynchronously
-" in the background according to |'g:go_term_enabled'|. You can set the mode
-" of the new terminal with |'g:go_term_mode'|.
-"
-if has('nvim')
-  "let g:go_term_enabled = 1
-  let g:go_term_mode = "split"
-  let g:go_term_height = 10
-  let g:go_term_width = 30
-end
-
-let g:go_fmt_command = "goimports"
-let g:go_test_timeout= '30s'
-
-" call go alternative test
-au FileType go nmap <leader>gt :call GoAltTest()<cr>
-
-" vim-go mappings
-au FileType go nmap <leader>gg :GoTestCompile<cr>
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <Leader>ge <Plug>(go-rename)
-au FileType go nmap <leader>c <Plug>(go-coverage)
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <Leader>ds <Plug>(go-def-split)
-au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
-au FileType go nmap <Leader>dt <Plug>(go-def-tab)
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
-au FileType go nmap <Leader>s <Plug>(go-implements)
-au FileType go nmap <Leader>i <Plug>(go-info)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PROTO BUF
@@ -503,5 +251,17 @@ let g:tagbar_type_go = {
 
 let g:deoplete#enable_at_startup = 1
 
+" vim-go settings
+" If using neovim `:GoTest` will run in a new terminal or run asynchronously
+" in the background according to |'g:go_term_enabled'|. You can set the mode
+" of the new terminal with |'g:go_term_mode'|.
+"
+if has('nvim')
+  "let g:go_term_enabled = 1
+  let g:go_term_mode = "split"
+  let g:go_term_height = 10
+  let g:go_term_width = 30
+end
 
-
+let g:go_fmt_command = "goimports"
+let g:go_test_timeout= '30s'
