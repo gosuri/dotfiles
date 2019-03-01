@@ -10,10 +10,8 @@ $ # zsh config
 $ ln -s ~/.dotfiles/.shellrc ~/.shellrc
 $ ln -s ~/.dotfiles/.zshrc ~/.zshrc
 $ # vim config
-$ ln -s ~/.dotfiles/.vim ~/.vim
 $ ln -s ~/.dotfiles/.vimrc ~/.vimrc
 ```
-
 ## Dependencies
 
 ### Git
@@ -36,7 +34,7 @@ $ chsh -s /bin/zsh
 
 ### vim (~>v8.0) with lua
 
-Using brew for macos: `brew install vim --with-lua`
+Using brew for macos: `brew install vim`
 
 ### Dien
 
