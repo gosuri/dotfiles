@@ -19,16 +19,23 @@ if dein#load_state('~/.vim/.cache/dein')
   call dein#add('tpope/vim-dispatch')       " vim-dispatch: asynchronous build and test dispatcher 
   call dein#add('tpope/vim-fugitive.git')   " vim-fugitive: git wapper
   call dein#add('scrooloose/nerdcommenter') " nerdcommenter: commenting plugin
-  call dein#add('SirVer/ultisnips')
-  if has('nvim')
-    call dein#add('Shougo/deoplete.nvim')
-  end
+
+  " call dein#add('Shougo/deoplete.nvim')
+  " if !has('nvim')
+  "   call dein#add('roxma/nvim-yarp')
+  "   call dein#add('roxma/vim-hug-neovim-rpc')
+  " endif
+  " let g:deoplete#enable_at_startup = 1
+  " call dein#add('Shougo/neosnippet.vim')
+  " call dein#add('Shougo/neosnippet-snippets')
+  " if has('nvim')
+  "   call dein#add('zchee/deoplete-go')
+  " end
 
   " GOLANG plugins
   call dein#add('fatih/vim-go')
-  if has('nvim')
-    call dein#add('zchee/deoplete-go')
-  end
+  call dein#add('AndrewRadev/splitjoin.vim')
+  call dein#add('SirVer/ultisnips')
 
   " RUBY Plugins
   call dein#add('vim-ruby/vim-ruby')
@@ -41,8 +48,6 @@ if dein#load_state('~/.vim/.cache/dein')
   call dein#add('mattn/emmet-vim')
   call dein#add('godlygeek/tabular')
   call dein#add('vim-airline/vim-airline')
-  call dein#add('Shougo/neosnippet.vim')
-  call dein#add('Shougo/neosnippet-snippets')
   call dein#add('tpope/vim-commentary')
 
   " Required:
@@ -116,9 +121,8 @@ set modelines=5
 
 let mapleader=","
 
-" Exit on jk
-imap jk <Esc>
-
+" Exit normal mode using <Ctrl>-[
+inoremap <C-[> <esc>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -249,13 +253,34 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
-let g:deoplete#enable_at_startup = 1
 
 " vim-go settings
 " If using neovim `:GoTest` will run in a new terminal or run asynchronously
 " in the background according to |'g:go_term_enabled'|. You can set the mode
 " of the new terminal with |'g:go_term_mode'|.
 "
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+autocmd FileType go nmap <leader>gb :<C-u>call <SID>build_go_files()<CR>
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap <leader>t  <Plug>(go-test)
+autocmd FileType go nmap <Leader>i <Plug>(go-info)
+autocmd FileType go nmap <Leader>c <Plug>(go-callers)
+autocmd FileType go nmap <Leader>ge <Plug>(go-rename)
+
+autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+
 if has('nvim')
   "let g:go_term_enabled = 1
   let g:go_term_mode = "split"
@@ -263,5 +288,22 @@ if has('nvim')
   let g:go_term_width = 30
 end
 
+" set autowrite
 let g:go_fmt_command = "goimports"
 let g:go_test_timeout= '30s'
+let g:go_auto_type_info = 1
+let g:go_list_type = "quickfix"
+let g:go_auto_type_info = 1
+let g:go_auto_sameids = 1
+
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_build_constraints = 1
+
+" go lint
+" let g:go_metalinter_enabled = ['errcheck', 'vet']
+" let g:go_metalinter_autosave = 1
+" let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+" let g:go_metalinter_deadline = "10s"
