@@ -40,3 +40,7 @@ function use-go15() {
 function flush-dns {
   sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder
 }
+
+function clean-ds-store {
+	find . -name ".DS_Store" -depth -exec rm {} \;
+}

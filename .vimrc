@@ -18,6 +18,7 @@ if dein#load_state('~/.vim/.cache/dein')
   call dein#add('ctrlpvim/ctrlp.vim')       " ctrlp: file browser
   call dein#add('tpope/vim-dispatch')       " vim-dispatch: asynchronous build and test dispatcher 
   call dein#add('tpope/vim-fugitive.git')   " vim-fugitive: git wapper
+  call dein#add('tpope/vim-surround.git')   
   call dein#add('scrooloose/nerdcommenter') " nerdcommenter: commenting plugin
 
   " call dein#add('Shougo/deoplete.nvim')
@@ -44,7 +45,6 @@ if dein#load_state('~/.vim/.cache/dein')
 
   " MISC
   call dein#add('fatih/vim-hclfmt')
-  call dein#add('mattn/emmet-vim')
   call dein#add('mattn/emmet-vim')
   call dein#add('godlygeek/tabular')
   call dein#add('vim-airline/vim-airline')
@@ -123,6 +123,20 @@ let mapleader=","
 
 " Exit normal mode using <Ctrl>-[
 inoremap <C-[> <esc>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Automatically set paste mode in Vim when pasting in insert mode
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
