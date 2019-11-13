@@ -4,34 +4,25 @@
 " DEIN CONFIG
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if &compatible
-  set nocompatible               
+  set nocompatible               " Be iMproved
 endif
 
-" Add the dein installation directory into runtimepath
-set runtimepath+=~/.vim/.cache/dein/repos/github.com/Shougo/dein.vim
+" Required:
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('~/.vim/.cache/dein')
-  call dein#begin('~/.vim/.cache/dein')
-  call dein#add('~/.vim/.cache/dein')
+if dein#load_state('~/.cache/dein')
+  call dein#begin('~/.cache/dein')
+
+  " Let dein manage dein
+  " Required:
+  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
 
   call dein#add('ctrlpvim/ctrlp.vim')       " ctrlp: file browser
   call dein#add('tpope/vim-dispatch')       " vim-dispatch: asynchronous build and test dispatcher 
   call dein#add('tpope/vim-fugitive.git')   " vim-fugitive: git wapper
   call dein#add('tpope/vim-surround.git')   
   call dein#add('scrooloose/nerdcommenter') " nerdcommenter: commenting plugin
-
-  " call dein#add('Shougo/deoplete.nvim')
-  " if !has('nvim')
-  "   call dein#add('roxma/nvim-yarp')
-  "   call dein#add('roxma/vim-hug-neovim-rpc')
-  " endif
-  " let g:deoplete#enable_at_startup = 1
-  " call dein#add('Shougo/neosnippet.vim')
-  " call dein#add('Shougo/neosnippet-snippets')
-  " if has('nvim')
-  "   call dein#add('zchee/deoplete-go')
-  " end
 
   " GOLANG plugins
   call dein#add('fatih/vim-go')
@@ -55,13 +46,17 @@ if dein#load_state('~/.vim/.cache/dein')
   call dein#save_state()
 endif
 
+" Required:
 filetype plugin indent on
 syntax enable
 
-" install not installed plugins on startup.
+" If you want to install not installed plugins on startup.
 if dein#check_install()
   call dein#install()
 endif
+
+"End dein config-------------------------
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BASIC EDITING CONFIGURATION

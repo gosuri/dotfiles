@@ -25,7 +25,7 @@ if [ -z "${GOPATH}" ]; then
 	export PATH=$GOPATH/bin:$PATH
 fi
 
-export GO111MODULE=off
+# export GO111MODULE=off
 
 # ================================================================
 # LOAD GO Dev Helper
@@ -40,12 +40,12 @@ export GO111MODULE=off
   # Load RVM into a shell session as a function
   [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
 
+
+# LOAD LOCAL HELPES
+# ================================================================
+[ -f $HOME/.dotfiles/tools/helpers.sh ] && source $HOME/.dotfiles/tools/helpers.sh
+
 # ================================================================
 # LOAD LOCAL ENV
 # ================================================================
 [ -f $HOME/.env ] && source $HOME/.env
-
-# ================================================================
-# LOAD LOCAL HELPES
-# ================================================================
-[ -f $HOME/.dotfiles/tools/helpers.sh ] && source $HOME/.dotfiles/tools/helpers.sh
