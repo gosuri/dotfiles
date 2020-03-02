@@ -4,15 +4,26 @@ Greg Osuri's dotfiles
 
 ## Installation
 
-Clone the source and link desired shell configs
+Fetch the source: 
 
-```
+```sh
 git clone git://github.com/gosuri/dotfiles.git ~/.dotfiles
+```
+
+Link primary shell config:
+
+```sh
 ln -s ~/.dotfiles/.shellrc ~/.shellrc
+```
+
+Link desired shell configs:
+
+```sh
+# for bash
 ln -s ~/.dotfiles/.bashrc ~/.bashrc
+
+# for zsh
 ln -s ~/.dotfiles/.zshrc ~/.zshrc
-$ # vim config
-$ ln -s ~/.dotfiles/.vimrc ~/.vimrc
 ```
 
 ## zsh 
@@ -42,15 +53,28 @@ Make sure to update your name and signature from `.gitconfig`. The default looks
 	signingkey = 688B0D3791621BF3
 ```
 
-### vim (~>v8.0) with lua
+## vim (~>v8.0) with lua
 
-Using brew for macos: `brew install vim`
+Using brew for macos: `brew install vim`.
 
-### Dien
+Link `.vimrc` config file:
+
+```sh
+ln -s ~/.dotfiles/.vimrc ~/.vimrc
+```
+
+### dien for Vim
+
+[Dien](https://github.com/Shougo/dein.vim) is a package manager for `vim`.
 
 Install using:
 
 ```sh
-$ curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-$ sh ./installer.sh ~/.vim/.cache/dein
+# download install script
+curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+
+# run install script
+sh ./installer.sh ~/.vim/.cache/dein
 ```
+
+Open vim to ensure the plugins are installed properly.
