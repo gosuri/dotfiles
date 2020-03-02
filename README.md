@@ -33,18 +33,18 @@ Optionally setup zsh; zsh comes packaged on OSX, if not you can install with hom
 Change the shell to zsh:
 
 ```
-chsh -s /bin/zsh
+sudo chsh -s /bin/zsh
 ```
 
 ## Git
 
-Git comes packages on OSX, if not you can install with homebrew: `brew install git`. On ubuntu/debian: `sudo apt-get install git`. Link git profile using:
+Git comes packaged on OSX, if not you can install with homebrew: `brew install git`. On ubuntu/debian: `sudo apt-get install git`. Link git profile using:
 
 ```
 ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
 ```
 
-Make sure to update your name and signature from `.gitconfig`. The default looks like the below:
+Make sure to update your name, email and signature from `.gitconfig`. The default looks like the below:
 
 ```
 [user]
@@ -74,7 +74,10 @@ Install using:
 curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
 
 # run install script
-sh ./installer.sh ~/.vim/.cache/dein
+sh ./installer.sh ~/.cache/dein
+
+# clean up
+rm installer.sh
 ```
 
 Open vim to ensure the plugins are installed properly.
