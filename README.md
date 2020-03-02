@@ -1,6 +1,6 @@
 # dotfiles
 
-Greg Osuri's dotfiles
+Greg Osuri's dotfiles. The below instructions are optimized for OSX.
 
 ## Installation
 
@@ -81,3 +81,34 @@ rm installer.sh
 ```
 
 Open vim to ensure the plugins are installed properly.
+
+
+## Go Lang (optional)
+
+Install using brew:
+
+```sh
+brew install golang
+```
+
+The shell profile uses a default `GOPATH`. Ensure `$GOPATH` exists:
+
+```sh
+mkdir -p $GOPATH
+```
+
+### Enable VIM bindings
+
+Open vim and run below:
+
+```
+:GoInstallBinaries
+```
+
+## Rust (Optional)
+
+Install using Homebrew:
+
+```sh
+brew install rust
+```
