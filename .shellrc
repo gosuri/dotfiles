@@ -25,12 +25,23 @@ if [ -z "${GOPATH}" ]; then
 	export PATH=$GOPATH/bin:$PATH
 fi
 
-# export GO111MODULE=off
-
 # ================================================================
 # LOAD GO Dev Helper
 # ================================================================
 [ -f $HOME/.dotfiles/tools/gohelpers.sh ] && source $HOME/.dotfiles/tools/gohelpers.sh
+
+# ================================================================
+# RUST
+# ================================================================
+[ "$(command -v cargo)" ] && \
+  export PATH="$HOME/.cargo/bin:$PATH" # Add cargo binaries to PATH
+
+# ================================================================
+# PYTHON
+# ================================================================
+# Use Python 3 by default
+[ "$(command -v python3)" ] && \
+  export PATH="/usr/local/opt/python/libexec/bin:$PATH" 
 
 # ================================================================
 # RUBY/RVM

@@ -36,6 +36,20 @@ Change the shell to zsh:
 sudo chsh -s /bin/zsh
 ```
 
+### Errors & Warnings
+
+If you get below error:
+
+```
+Ignore insecure directories and continue [y] or abort compinit [n]? ncompinit: initialization aborted
+```
+
+Fix insecure directories by running:
+
+```
+sudo chmod g-w $(compaudit)
+```
+
 ## Git
 
 Git comes packaged on OSX, if not you can install with homebrew: `brew install git`. On ubuntu/debian: `sudo apt-get install git`. Link git profile using:
@@ -82,7 +96,6 @@ rm installer.sh
 
 Open vim to ensure the plugins are installed properly.
 
-
 ## Go Lang (optional)
 
 Install using brew:
@@ -112,3 +125,5 @@ Install using Homebrew:
 ```sh
 brew install rust
 ```
+
+The above command installs `rustc` and `cargo`. The path will include `$HOME/.cargo/bin` automatically.

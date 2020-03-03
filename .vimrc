@@ -29,6 +29,9 @@ if dein#load_state('~/.cache/dein')
   call dein#add('AndrewRadev/splitjoin.vim')
   call dein#add('SirVer/ultisnips')
 
+  " Rust
+  call dein#add('rust-lang/rust.vim')
+
   " RUBY Plugins
   call dein#add('vim-ruby/vim-ruby')
   call dein#add('tpope/vim-rails')
