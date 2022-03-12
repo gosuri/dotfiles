@@ -27,7 +27,6 @@ if dein#load_state('~/.cache/dein')
   " GOLANG plugins
   call dein#add('fatih/vim-go')
   call dein#add('AndrewRadev/splitjoin.vim')
-  call dein#add('SirVer/ultisnips')
 
   " Rust
   call dein#add('rust-lang/rust.vim')
