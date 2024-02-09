@@ -84,14 +84,7 @@ ln -s ~/.dotfiles/.vimrc ~/.vimrc
 Install using:
 
 ```sh
-# download install script
-curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-
-# run install script
-sh ./installer.sh ~/.cache/dein
-
-# clean up
-rm installer.sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/Shougo/dein-installer.vim/master/installer.sh)"
 ```
 
 Open vim to ensure the plugins are installed properly.
