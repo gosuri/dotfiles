@@ -59,6 +59,13 @@ fi
 [ "$(/opt/homebrew/bin/brew shellenv)" ] && \
   eval "$(/opt/homebrew/bin/brew shellenv)"
 
+# ================================================================
+# ASDF
+# ================================================================
+[ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ] && \
+  source /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+
 # LOAD LOCAL HELPES
 # ================================================================
 [ -f $HOME/.dotfiles/tools/helpers.sh ] && source $HOME/.dotfiles/tools/helpers.sh
