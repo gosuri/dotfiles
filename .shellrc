@@ -1,7 +1,6 @@
 # vi: ft=sh
 
-# ================================================================
-# WORKSPACE for Code
+# ================================================================ # WORKSPACE for Code
 # ================================================================
 export CODEHOME=$HOME/code
 
@@ -64,6 +63,12 @@ fi
 # ================================================================
 [ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ] && \
   source /opt/homebrew/opt/asdf/libexec/asdf.sh
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+# append completions to fpath
+fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
+
+# initialise completions with ZSH's compinit
+autoload -Uz compinit && compinit
 
 
 # LOAD LOCAL HELPES

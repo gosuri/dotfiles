@@ -83,7 +83,7 @@
 [user]
 	name = Greg Osuri
 	email = me@gregosuri.com
-	signingkey = 688B0D3791621BF3
+	signingkey = /Users/gosuri/.ssh/id_rsa.pub
 	
 [sendmail]
 	smtpuser = me@gregosuri.com
@@ -98,3 +98,9 @@
 	helper = osxkeychain
 [init]
 	defaultBranch = main
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = /Users/gosuri/.ssh/allowed_signers
