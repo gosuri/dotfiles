@@ -100,3 +100,28 @@ if [ "$(command -v direnv)" ]; then
       ;;
   esac
 fi
+
+# ================================================================
+# Use Homebrew Unzip if available
+# ================================================================
+
+[ -f "/opt/homebrew/opt/unzip/bin/unzip" ] && \
+  export PATH="/opt/homebrew/opt/unzip/bin:$PATH"
+
+
+# ================================================================
+# Use Homebrew Curl if available
+# ================================================================
+
+[ -f "/opt/homebrew/opt/curl/bin/curl" ] && \
+  export PATH="/opt/homebrew/opt/curl/bin:$PATH" && \
+  export LDFLAGS="-L/opt/homebrew/opt/curl/lib" && \
+  export CPPFLAGS="-I/opt/homebrew/opt/curl/include"
+
+# ================================================================
+# Use Homebrew GNU Getopt if available
+# ================================================================
+
+[ -f "/opt/homebrew/opt/gnu-getopt/bin/getopt" ] && \
+  export PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"
+
