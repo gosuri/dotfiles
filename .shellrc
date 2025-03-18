@@ -124,4 +124,3 @@ fi
 
 [ -f "/opt/homebrew/opt/gnu-getopt/bin/getopt" ] && \
   export PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"
-
