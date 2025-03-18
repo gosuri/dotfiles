@@ -79,3 +79,24 @@ autoload -Uz compinit && compinit
 # LOAD LOCAL ENV
 # ================================================================
 [ -f $HOME/.env ] && source $HOME/.env
+
+# ================================================================
+# GNU Make 4.0
+# ================================================================
+[ -f "/opt/homebrew/opt/make/libexec/gnubin/make" ] && \
+  alias make="gmake" && \
+  export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
+
+# ================================================================
+# direnv
+# ================================================================
+if [ "$(command -v direnv)" ]; then
+  case "$SHELL" in
+    */zsh)
+      eval "$(direnv hook zsh)"
+      ;;
+    */bash)
+      eval "$(direnv hook bash)"
+      ;;
+  esac
+fi
