@@ -1,3 +1,7 @@
+---
+description: General rules for development expertise across the projects.
+globs: **/*
+---
 
 - Be casual unless otherwise specified
 - Be terse
