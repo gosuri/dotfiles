@@ -1,6 +1,7 @@
 # vi: ft=sh
 
-# ================================================================ # WORKSPACE for Code
+# ================================================================ 
+# # WORKSPACE for Code
 # ================================================================
 export CODEHOME=$HOME/code
 
@@ -44,6 +45,9 @@ fi
 [ "$(command -v python3)" ] && \
   export PATH="/usr/local/opt/python/libexec/bin:$PATH" 
 
+# Local Bin for pipx
+export PATH="$HOME/.local/bin:$PATH"
+
 # ================================================================
 # RUBY/RVM
 # ================================================================
@@ -67,20 +71,11 @@ export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 # append completions to fpath
 fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
 
-# initialise completions with ZSH's compinit
-autoload -Uz compinit && compinit
-
-
 # LOAD LOCAL HELPES
 # ================================================================
 [ -f $HOME/.dotfiles/tools/helpers.sh ] && source $HOME/.dotfiles/tools/helpers.sh
 
-# ================================================================
-# LOAD LOCAL ENV
-# ================================================================
-[ -f $HOME/.env ] && source $HOME/.env
 
-# ================================================================
 # GNU Make 4.0
 # ================================================================
 [ -f "/opt/homebrew/opt/make/libexec/gnubin/make" ] && \
@@ -122,3 +117,22 @@ fi
 
 [ -f "/opt/homebrew/opt/gnu-getopt/bin/getopt" ] && \
   export PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"
+
+# ================================================================
+# NPM
+# ================================================================
+
+[ "$(command -v npm)" ] && \
+  export PATH="$(npm prefix -g)/bin:$PATH"
+
+# ================================================================
+# Karbiner
+# ================================================================
+
+[ -f ~/.config/karabiner/karabiner.json ] && \
+  ln -sf $(pwd)/karabiner.json ~/.config/karabiner/karabiner.json
+
+# ================================================================
+# LOAD LOCAL ENV
+# ================================================================
+[ -f $HOME/.env ] && source $HOME/.env

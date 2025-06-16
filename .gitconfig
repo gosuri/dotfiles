@@ -104,3 +104,8 @@
 	gpgsign = true
 [gpg "ssh"]
 	allowedSignersFile = /Users/gosuri/.ssh/allowed_signers
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
