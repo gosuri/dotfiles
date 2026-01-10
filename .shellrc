@@ -123,12 +123,16 @@ fi
 # ================================================================
 [ "$(command -v npm)" ] && \
   export PATH="$(npm prefix -g)/bin:$PATH"
+export NODE_OPTIONS="--disable-warning=ExperimentalWarning"
 
 # ================================================================
-# Karbiner
+# Antigravity
 # ================================================================
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 # ================================================================
 # LOAD LOCAL ENV
 # ================================================================
 [ -f $HOME/.env ] && source $HOME/.env
+
+

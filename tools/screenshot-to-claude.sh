@@ -3,17 +3,8 @@
 screencapture -ic -W
 # Open Claude and wait
 open -a "Claude"
-sleep 1
 
-# Try to paste with better targeting
-osascript <<EOF
-tell application "Claude"
-    activate
-    delay 0.5
-end tell
-tell application "System Events"
-    tell process "Claude"
-        keystroke "v" using command down
-    end tell
-end tell
-EOF
+sleep 1.5
+
+# Activate and paste
+osascript -e 'tell application "Claude" to activate' -e 'delay 0.5' -e 'tell application "System Events" to keystroke "v" using command down'
